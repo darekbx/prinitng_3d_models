@@ -3,18 +3,18 @@ $fn = 90;
 tubeDiameter = 27;
 
 // Base plate
-cube([28, 25, 2]);
+cube([28, 25.1, 2]);
 
 // Mounting
-translate([0, -2, 0]) {
+translate([0, 1, 0]) {
     difference() {
         translate([0, 0, 0]) {
-            translate([5, 2, 2]) {
-                cube([18, 8, 6]);
+            translate([7, 2, 2]) {
+                cube([14, 8, 6]);
             }
             translate([14, 10, 7 + tubeDiameter / 2]) {
                 rotate([90, 0, 0]) {
-                    cylinder(d = tubeDiameter + 4, h = 8);
+                    cylinder(d = tubeDiameter + 4.5, h = 8);
                 }
             } 
             

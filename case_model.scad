@@ -5,6 +5,10 @@ $fs = 0.4;
 $fn = 100;
 
 showComponents = false;
+flat = true;
+noKeyboard = true;
+noKeys = true;
+noDisplay = false;
 
 keyboardX = 0;
 keyboardY = 40;
@@ -18,13 +22,35 @@ displayY = 0;
 // # highlight
 // * disable
 
-Case();
+difference() {
+    Case();
+    {
+        if (noKeyboard) {
+            translate([-10, 38, -5]) {
+                cube([60, 80, 25]);
+            }
+        }
+        if (noDisplay) {
+            translate([-10, -10, -5]) {
+                cube([60, 49, 25]);
+            }
+            translate([-10, 86, -5]) {
+                cube([60, 30, 25]);
+            }
+        }
+        if (flat) {            
+            translate([-10, 86, 0]) {
+                cube([60, 20, 20]);
+            }
+        }
+    }
+}
 
 if (showComponents) {
-    translate([1, 1, 20])
+    translate([displayX, displayY, 12])
         DisplayPlaceholder();
 
-    translate([3, 40, 20])
+    translate([keyboardX, keyboardY, 11])
         KeyboardPlaceholder();
 }
 
@@ -47,15 +73,67 @@ module Case() {
             translate([keyboardX, keyboardY, 10]) {
                 KeyboardPlaceholder();
             }
+            if (flat) {
+                translate([-10, -10, -5]) {
+                    cube([60, 110, 20]);
+                }
+            }
         }
     }
     translate([displayX, displayY, 12]) {
         DisplayMountingBolts();
     }
+    translate([displayX, displayY, 12]) {
+        DisplayFrame();
+    }
     translate([keyboardX + 4.5, keyboardY, 15.7]) {
-        KeyaboardKeys();
+        if (!noKeys) {
+            KeyboardKeys();
+        }
     }
     KeyboardMounting();
+}
+
+module DisplayFrame() {
+    frameHeight = 10;
+    xPos = 30; // 2.5mm
+    yPos = 85; // 8mm
+    width = 350 - 20;
+    height = 230 - 20;
+        scale([0.1, 0.1, 0.1]) {
+            translate([xPos - 5, yPos - 5, 30]) {
+                
+                difference() {
+                    translate([0, 0, 0]) {
+                        rotate([90, 0, 0]) {
+                            translate([5, 12, -240]) {
+                                cylinder(h = 240, d = 20);
+                            }
+                            translate([355, 12, -240]) {
+                                cylinder(h = 240, d = 20);
+                            }
+                        }
+                        rotate([90, 0, 90]) {
+                            translate([5, 12, 5]) {
+                                cylinder(h = 350, d = 20);
+                            }
+                            translate([235, 12, 5]) {
+                                cylinder(h = 350, d = 20);
+                            }
+                        }
+                    }
+                    translate([-50, -20, -90]) {
+                        cube([500, 340, 100]);
+                    }
+                }
+                difference() {
+                    cube([width + 30, height + 30, frameHeight]);
+                    translate([15, 15, -40]) {
+                        cube([width, height, 80]);
+                    }
+                }
+            }
+    }
 }
 
 module KeyboardMounting() {
@@ -64,7 +142,7 @@ module KeyboardMounting() {
         cube([46, 1.2, 8]);
     }
     // Back wall
-    translate([keyboardX - 2, keyboardY + 45, 8]) {
+    translate([keyboardX - 2, keyboardY + 44.5, 8]) {
         cube([46, 1.2, 8]);
     }
     
@@ -75,10 +153,10 @@ module KeyboardMounting() {
         Mounting1();
     }
     
-    translate([keyboardX + 40, keyboardY + 2, 8]) {
+    translate([keyboardX + 39.5, keyboardY + 2, 8]) {
         Mounting2();
     }
-    translate([keyboardX + 40, keyboardY + 38, 8]) {
+    translate([keyboardX + 39.5, keyboardY + 38, 8]) {
         Mounting2();
     }
     
@@ -90,7 +168,7 @@ module KeyboardMounting() {
     }
     
     module Mounting2() {
-        cube([2, 5, 8]);
+        cube([1.5, 5, 8]);
         translate([-1, 0, 0]) {
             difference() {
                 translate([-0.25, 0, 0]) {
@@ -106,7 +184,7 @@ module KeyboardMounting() {
     }
 }
 
-module KeyaboardKeys() {
+module KeyboardKeys() {
     vSpace = 3; // 3mm
     hSpace = 3.5; // 3.5mm
     switchSize = 6; // 6mm
@@ -154,8 +232,8 @@ module DisplayMountingBolts() {
     height = 375; // 37.5mm
     x = 25; // X position offset
     y = 25; // Y position offset
-    d = 23; // Diameter of the bolt
-    sd = 10; // Screw hole diameter
+    d = 27; // Diameter of the bolt
+    sd = 12; // Screw hole diameter
     h = 40; // Height of the bolt
     scale([0.1, 0.1, 0.1]) {
         difference() {
@@ -182,8 +260,8 @@ module DisplayPlaceholder() {
     // https://botland.com.pl/wyswietlacze-oled/4441-wyswietlacz-oled-niebieski-graficzny-13-b-128x64px-spi-i2c-proste-zlacza-waveshare-10451-5904422371968.html
     width = 405; // 40.5mm
     height = 375; // 37.5mm
-    thickness = 18; // 1.8mm
-    d = 25; // Hole diameter, 2.5mm
+    thickness = 15; // 1.8mm
+    d = 30; // Hole diameter, 3mm
     x = 25; // Hole X position offset
     y = 25; // Hole Y position offset
     scale([0.1, 0.1, 0.1]) {
@@ -196,20 +274,20 @@ module DisplayPlaceholder() {
                 translate([width - x, height - y, -1]) { cylinder(50, d = d); }
             }
         }
-        xPos = 25; // 2.5mm
+        xPos = 30; // 2.5mm
         yPos = 85; // 8mm
         translate([xPos, yPos, 20]) {
             color("black") {
-                cube([345, 230, 30]);
+                cube([350, 230, 30]);
             }
         }
     }
 }
 
 module KeyboardPlaceholder() {
-    width = 395; // 39.5mm
-    height = 445; // 44.5mm
-    thickness = 18; // 1.8mm
+    width = 394; // 39.4mm
+    height = 441; // 44.1mm
+    thickness = 15; // 1.5mm
     scale([0.1, 0.1, 0.1]) {
         
         // Board
@@ -217,10 +295,10 @@ module KeyboardPlaceholder() {
             cube([width, height, thickness]);
         }
         
-        offsetLeft = 55; // 5.5mm
+        offsetLeft = 35; // 5.5mm
         offsetTop = 20; // 2mm
-        vSpace = 30; // 3mm
-        hSpace = 35; // 3.5mm
+        vSpace = 36; // 3.6mm
+        hSpace = 28; // 2.8mm
         switchSize = 60; // 6mm
         
         translate([offsetLeft, offsetTop, 0]) {
