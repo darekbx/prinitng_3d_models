@@ -99,48 +99,6 @@ module Case() {
     KeyboardMounting();
 }
 
-module DisplayFrame() {
-    frameHeight = 10;
-    xPos = (displayBoardWidth - displayWidth) / 2;
-    yPos = 80; // 8mm
-    width = displayWidth - 20;
-    height = displayHeight - 20;
-        scale([0.1, 0.1, 0.1]) {
-            translate([xPos - 5, yPos - 5, 30]) {
-                
-                difference() {
-                    translate([0, 0, 0]) {
-                        rotate([90, 0, 0]) {
-                            translate([5, 12, -(displayHeight + 5)]) {
-                                cylinder(h = displayHeight, d = 20);
-                            }
-                            translate([325, 12, -(displayHeight + 5)]) {
-                                cylinder(h = displayHeight, d = 20);
-                            }
-                        }
-                        rotate([90, 0, 90]) {
-                            translate([5, 12, 5]) {
-                                cylinder(h = displayWidth, d = 20);
-                            }
-                            translate([displayHeight + 5, 12, 5]) {
-                                cylinder(h = displayWidth, d = 20);
-                            }
-                        }
-                    }
-                    translate([-50, -20, -90]) {
-                        cube([500, 340, 100]);
-                    }
-                }
-                difference() {
-                    cube([width + 30, height + 30, frameHeight]);
-                    translate([15, 15, -40]) {
-                        cube([width, height, 80]);
-                    }
-                }
-            }
-    }
-}
-
 module KeyboardMounting() {
     // Front wall
     translate([keyboardX - 2, keyboardY - 1.5, 8]) {
@@ -232,6 +190,50 @@ module KeyboardKeys() {
     }
 }
 
+module DisplayFrame() {
+    frameHeight = 8;
+    xPos = (displayBoardWidth - displayWidth) / 2;
+    yPos = 80; // 8mm
+    width = displayWidth - 20;
+    height = displayHeight - 20;
+        scale([0.1, 0.1, 0.1]) {
+            translate([xPos - 5, yPos - 5, 30]) {
+                
+                difference() {
+                    translate([0, 0, 0]) {
+                        rotate([90, 0, 0]) {
+                            translate([5, 12, -(displayHeight + 5)]) {
+                                cylinder(h = displayHeight, d = 20);
+                            }
+                            translate([325, 12, -(displayHeight + 5)]) {
+                                cylinder(h = displayHeight, d = 20);
+                            }
+                        }
+                        rotate([90, 0, 90]) {
+                            translate([5, 12, 5]) {
+                                cylinder(h = displayWidth, d = 20);
+                            }
+                            translate([displayHeight + 5, 12, 5]) {
+                                cylinder(h = displayWidth, d = 20);
+                            }
+                        }
+                    }
+                    translate([-50, -20, -90]) {
+                        cube([500, 340, 100]);
+                    }
+                }
+                difference() {
+                    translate([0, 0, 2]) {
+                        cube([width + 30, height + 30, frameHeight]);
+                    }
+                    translate([15, 15, -40]) {
+                        cube([width, height, 80]);
+                    }
+                }
+            }
+    }
+}
+
 module DisplayMountingBolts() {
     x = 25; // X position offset
     y = 25; // Y position offset
@@ -240,21 +242,20 @@ module DisplayMountingBolts() {
     h = 45; // Height of the bolt
     hOffset = 2.5;
     scale([0.1, 0.1, 0.1]) {
-        difference() {
-            translate([x, y, hOffset]) { cylinder(h, d = d); }
-            translate([x, y, hOffset - 2]) { cylinder(h, d = sd); }
-        }
-        difference() {
-            translate([displayBoardWidth - x, y, hOffset]) { cylinder(h, d = d); }
-            translate([displayBoardWidth - x, y, hOffset - 2]) { cylinder(h, d = sd); }
-        }
-        difference() {
-            translate([x, displayBoardHeight - y, hOffset]) { cylinder(h, d = d); }
-            translate([x, displayBoardHeight - y, hOffset - 2]) { cylinder(h, d = sd); }
-        }
-        difference() {
-            translate([displayBoardWidth - x, displayBoardHeight - y, hOffset]) { cylinder(h, d = d); }
-            translate([displayBoardWidth - x, displayBoardHeight - y, hOffset - 2]) { cylinder(h, d = sd); }
+        translate([x, y, hOffset]) { Bolt(); }
+        translate([displayBoardWidth - x, y, hOffset]) { Bolt(); }
+        translate([x, displayBoardHeight - y, hOffset]) { Bolt(); }
+        translate([displayBoardWidth - x, displayBoardHeight - y, hOffset]) { Bolt(); }    
+    }
+    
+    module Bolt() {
+        difference() { 
+            translate([0, 0, 0]) {
+                cylinder(h, d = d);
+                translate([-d, -5, h / 2]) cube([d * 2, 10, h / 2]);
+                translate([-5, -d, h / 2]) cube([10, d * 2, h / 2]);
+            }
+            translate([0, 0, -2]) cylinder(h, d = sd);
         }
     }
 }
