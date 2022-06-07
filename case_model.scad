@@ -16,6 +16,11 @@ keyboardY = 40;
 displayX = 1;
 displayY = 0;
 
+displayBoardWidth = 405; // 40.5mm
+displayBoardHeight = 375; // 37.5mm
+displayWidth = 320;
+displayHeight = 200;
+
 // https://openscad.org/cheatsheet/
 // % transparent
 // ! show only 
@@ -96,29 +101,29 @@ module Case() {
 
 module DisplayFrame() {
     frameHeight = 10;
-    xPos = 30; // 2.5mm
+    xPos = (displayBoardWidth - displayWidth) / 2;
     yPos = 85; // 8mm
-    width = 350 - 20;
-    height = 230 - 20;
+    width = displayWidth - 20;
+    height = displayHeight - 20;
         scale([0.1, 0.1, 0.1]) {
             translate([xPos - 5, yPos - 5, 30]) {
                 
                 difference() {
                     translate([0, 0, 0]) {
                         rotate([90, 0, 0]) {
-                            translate([5, 12, -240]) {
-                                cylinder(h = 240, d = 20);
+                            translate([5, 12, -displayHeight]) {
+                                cylinder(h = displayHeight, d = 20);
                             }
-                            translate([355, 12, -240]) {
-                                cylinder(h = 240, d = 20);
+                            translate([325, 12, -displayHeight]) {
+                                cylinder(h = displayHeight, d = 20);
                             }
                         }
                         rotate([90, 0, 90]) {
                             translate([5, 12, 5]) {
-                                cylinder(h = 350, d = 20);
+                                cylinder(h = displayWidth, d = 20);
                             }
-                            translate([235, 12, 5]) {
-                                cylinder(h = 350, d = 20);
+                            translate([205, 12, 5]) {
+                                cylinder(h = displayWidth, d = 20);
                             }
                         }
                     }
@@ -228,29 +233,28 @@ module KeyboardKeys() {
 }
 
 module DisplayMountingBolts() {
-    width = 405; // 40.5mm
-    height = 375; // 37.5mm
     x = 25; // X position offset
     y = 25; // Y position offset
     d = 27; // Diameter of the bolt
-    sd = 12; // Screw hole diameter
-    h = 40; // Height of the bolt
+    sd = 15; // Screw hole diameter
+    h = 45; // Height of the bolt
+    hOffset = 2.5;
     scale([0.1, 0.1, 0.1]) {
         difference() {
-            translate([x, y, 8]) { cylinder(h, d = d); }
-            translate([x, y, 6]) { cylinder(h, d = sd); }
+            translate([x, y, hOffset]) { cylinder(h, d = d); }
+            translate([x, y, hOffset - 2]) { cylinder(h, d = sd); }
         }
         difference() {
-            translate([width - x, y, 8]) { cylinder(h, d = d); }
-            translate([width - x, y, 6]) { cylinder(h, d = sd); }
+            translate([displayBoardWidth - x, y, hOffset]) { cylinder(h, d = d); }
+            translate([displayBoardWidth - x, y, hOffset - 2]) { cylinder(h, d = sd); }
         }
         difference() {
-            translate([x, height - y, 8]) { cylinder(h, d = d); }
-            translate([x, height - y, 6]) { cylinder(h, d = sd); }
+            translate([x, displayBoardHeight - y, hOffset]) { cylinder(h, d = d); }
+            translate([x, displayBoardHeight - y, hOffset - 2]) { cylinder(h, d = sd); }
         }
         difference() {
-            translate([width - x, height - y, 8]) { cylinder(h, d = d); }
-            translate([width - x, height - y, 6]) { cylinder(h, d = sd); }
+            translate([displayBoardWidth - x, displayBoardHeight - y, hOffset]) { cylinder(h, d = d); }
+            translate([displayBoardWidth - x, displayBoardHeight - y, hOffset - 2]) { cylinder(h, d = sd); }
         }
     }
 }
@@ -258,27 +262,25 @@ module DisplayMountingBolts() {
 module DisplayPlaceholder() {
     // https://www.waveshare.com/1.3inch-oled-b.htm
     // https://botland.com.pl/wyswietlacze-oled/4441-wyswietlacz-oled-niebieski-graficzny-13-b-128x64px-spi-i2c-proste-zlacza-waveshare-10451-5904422371968.html
-    width = 405; // 40.5mm
-    height = 375; // 37.5mm
     thickness = 15; // 1.8mm
     d = 30; // Hole diameter, 3mm
     x = 25; // Hole X position offset
     y = 25; // Hole Y position offset
     scale([0.1, 0.1, 0.1]) {
         difference() {
-            cube([width, height, thickness]);
+            cube([displayBoardWidth, displayBoardHeight, thickness]);
             {
                 translate([x, y, -1]) { cylinder(50, d = d); }
-                translate([width - x, y, -1]) { cylinder(50, d = d); }
-                translate([x, height - y, -1]) { cylinder(50, d = d); }
-                translate([width - x, height - y, -1]) { cylinder(50, d = d); }
+                translate([displayBoardWidth - x, y, -1]) { cylinder(50, d = d); }
+                translate([x, displayBoardHeight - y, -1]) { cylinder(50, d = d); }
+                translate([displayBoardWidth - x, displayBoardHeight - y, -1]) { cylinder(50, d = d); }
             }
         }
-        xPos = 30; // 2.5mm
+        xPos = (displayBoardWidth - displayWidth) / 2;
         yPos = 85; // 8mm
         translate([xPos, yPos, 20]) {
             color("black") {
-                cube([350, 230, 30]);
+                cube([displayWidth, displayHeight, 30]);
             }
         }
     }
