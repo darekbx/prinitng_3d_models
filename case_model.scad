@@ -19,7 +19,7 @@ displayY = 0;
 displayBoardWidth = 405; // 40.5mm
 displayBoardHeight = 375; // 37.5mm
 displayWidth = 320;
-displayHeight = 200;
+displayHeight = 190;
 
 // https://openscad.org/cheatsheet/
 // % transparent
@@ -102,7 +102,7 @@ module Case() {
 module DisplayFrame() {
     frameHeight = 10;
     xPos = (displayBoardWidth - displayWidth) / 2;
-    yPos = 85; // 8mm
+    yPos = 80; // 8mm
     width = displayWidth - 20;
     height = displayHeight - 20;
         scale([0.1, 0.1, 0.1]) {
@@ -111,10 +111,10 @@ module DisplayFrame() {
                 difference() {
                     translate([0, 0, 0]) {
                         rotate([90, 0, 0]) {
-                            translate([5, 12, -displayHeight]) {
+                            translate([5, 12, -(displayHeight + 5)]) {
                                 cylinder(h = displayHeight, d = 20);
                             }
-                            translate([325, 12, -displayHeight]) {
+                            translate([325, 12, -(displayHeight + 5)]) {
                                 cylinder(h = displayHeight, d = 20);
                             }
                         }
@@ -122,7 +122,7 @@ module DisplayFrame() {
                             translate([5, 12, 5]) {
                                 cylinder(h = displayWidth, d = 20);
                             }
-                            translate([205, 12, 5]) {
+                            translate([displayHeight + 5, 12, 5]) {
                                 cylinder(h = displayWidth, d = 20);
                             }
                         }
@@ -236,7 +236,7 @@ module DisplayMountingBolts() {
     x = 25; // X position offset
     y = 25; // Y position offset
     d = 27; // Diameter of the bolt
-    sd = 15; // Screw hole diameter
+    sd = 16; // Screw hole diameter
     h = 45; // Height of the bolt
     hOffset = 2.5;
     scale([0.1, 0.1, 0.1]) {
@@ -277,7 +277,7 @@ module DisplayPlaceholder() {
             }
         }
         xPos = (displayBoardWidth - displayWidth) / 2;
-        yPos = 85; // 8mm
+        yPos = 80; // 8mm
         translate([xPos, yPos, 20]) {
             color("black") {
                 cube([displayWidth, displayHeight, 30]);
