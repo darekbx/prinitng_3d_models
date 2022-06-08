@@ -6,8 +6,8 @@ $fn = 100;
 
 showComponents = false;
 flat = true;
-noKeyboard = true;
-noKeys = true;
+noKeyboard = false;
+noKeys = false;
 noDisplay = false;
 
 keyboardX = 0;
@@ -91,7 +91,7 @@ module Case() {
     translate([displayX, displayY, 12]) {
         DisplayFrame();
     }
-    translate([keyboardX + 4.5, keyboardY, 15.7]) {
+    translate([keyboardX + 2.5, keyboardY, 15.7]) {
         if (!noKeys) {
             KeyboardKeys();
         }
@@ -148,8 +148,8 @@ module KeyboardMounting() {
 }
 
 module KeyboardKeys() {
-    vSpace = 3; // 3mm
-    hSpace = 3.5; // 3.5mm
+    vSpace = 3.6;
+    hSpace = 2.8;
     switchSize = 6; // 6mm
     
     labelIndex = 0;
@@ -180,9 +180,9 @@ module KeyboardKeys() {
                             }
                         }
                     }
-                    translate([3.5, 4, 1]) {
+                    translate([4, 4.5, 1]) {
                         rotate(180, [0,0,1])
-                        linear_extrude() text(text = labels[y][x], size = 3);
+                        linear_extrude() text(text = labels[y][x], size = 4);
                     }
                 }
             }
@@ -191,7 +191,8 @@ module KeyboardKeys() {
 }
 
 module DisplayFrame() {
-    frameHeight = 8;
+    frameHeightOffset = -2;
+    frameHeight = 12;
     xPos = (displayBoardWidth - displayWidth) / 2;
     yPos = 80; // 8mm
     width = displayWidth - 20;
@@ -223,7 +224,7 @@ module DisplayFrame() {
                     }
                 }
                 difference() {
-                    translate([0, 0, 2]) {
+                    translate([0, 0, frameHeightOffset]) {
                         cube([width + 30, height + 30, frameHeight]);
                     }
                     translate([15, 15, -40]) {
@@ -239,7 +240,7 @@ module DisplayMountingBolts() {
     y = 25; // Y position offset
     d = 27; // Diameter of the bolt
     sd = 16; // Screw hole diameter
-    h = 45; // Height of the bolt
+    h = 47; // Height of the bolt
     hOffset = 2.5;
     scale([0.1, 0.1, 0.1]) {
         translate([x, y, hOffset]) { Bolt(); }
