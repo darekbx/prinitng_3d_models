@@ -4,12 +4,13 @@ $fa = 1;
 $fs = 0.4;
 $fn = 100;
 
+showBushing = true;
 showComponents = false;
 flat = true;
 noDisplay = false;
 
 displayX = 1;
-displayY = 0;
+displayY = 2;
 
 displayBoardWidth = 270;
 displayBoardHeight = 280;
@@ -22,20 +23,22 @@ displayHeight = 192 - 40;
 // # highlight
 // * disable
 
-difference() {
-    Case();
-    {
-        if (noDisplay) {
-            translate([-10, -10, -5]) {
-                cube([60, 49, 25]);
+translate([0, 0, -17]) {
+    difference() {
+        Case();
+        {
+            if (noDisplay) {
+                translate([-10, -10, -5]) {
+                    cube([60, 49, 25]);
+                }
+                translate([-10, 86, -5]) {
+                    cube([60, 30, 25]);
+                }
             }
-            translate([-10, 86, -5]) {
-                cube([60, 30, 25]);
-            }
-        }
-        if (flat) {            
-            translate([-10, 86, 0]) {
-                cube([60, 20, 20]);
+            if (flat) {            
+                translate([-10, 86, 0]) {
+                    cube([60, 20, 20]);
+                }
             }
         }
     }
@@ -44,6 +47,15 @@ difference() {
 if (showComponents) {
     translate([displayX, displayY, 12])
         DisplayPlaceholder();
+}
+
+if (showBushing) {
+    translate([0, 0, -1]) {
+        translate([10, 36, 0]) Bushing();
+        translate([15, 36, 0]) Bushing();
+        translate([20, 36, 0]) Bushing();
+        translate([25, 36, 0]) Bushing();
+    }
 }
 
 module Case() {
@@ -60,7 +72,7 @@ module Case() {
                 DisplayPlaceholder();
             }
             if (flat) {
-                translate([-10, -10, -5]) {
+                translate([-10, -10, -10]) {
                     cube([60, 110, 20]);
                 }
             }
@@ -124,9 +136,8 @@ module DisplayMountingBolts() {
     d = 20; // Diameter of the bolt
     x = 7 + d / 2; // X position offset
     y = 11 + d / 2; // Y position offset
-    sd = 12; // Screw hole diameter
-    h = 48; // Height of the bolt
-    hOffset = 4;
+    h = 60; // Height of the bolt
+    hOffset = -8;
     scale([0.1, 0.1, 0.1]) {
         translate([x, y, hOffset]) { Bolt(); }
         translate([displayBoardWidth - x, y, hOffset]) { Bolt(); }
@@ -135,14 +146,20 @@ module DisplayMountingBolts() {
     }
     
     module Bolt() {
-        difference() { 
-            translate([0, 0, 0]) {
-                cylinder(h, d = d);
-                translate([-d, -5, h / 2]) cube([d * 2 + 1, 10, h / 2]);
-                translate([-5, -d, h / 2]) cube([10, d * 2 + 1, h / 2]);
-            }
-            translate([0, 0, -2]) cylinder(h, d = sd);
+        translate([0, 0, 0]) {
+            cylinder(h, d = d);
+            translate([-d, -7, h / 2]) cube([d * 2 + 2, 14, h / 2]);
+            translate([-7, -d, h / 2]) cube([14, d * 2 + 2, h / 2]);
         }
+    }
+}
+
+module Bushing() {
+    d = 2; // Diameter of the bolt
+    h = 1;
+    difference() {
+        cylinder(h, d = d * 2);
+        translate([0, 0, -5]) cylinder(10, d = d);
     }
 }
 
