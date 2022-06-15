@@ -4,7 +4,7 @@ $fa = 1;
 $fs = 0.4;
 $fn = 100;
 
-showBushing = true;
+showBushing = false;
 showComponents = false;
 flat = true;
 noDisplay = false;
@@ -136,8 +136,8 @@ module DisplayMountingBolts() {
     d = 20; // Diameter of the bolt
     x = 7 + d / 2; // X position offset
     y = 11 + d / 2; // Y position offset
-    h = 60; // Height of the bolt
-    hOffset = -8;
+    h = 65; // Height of the bolt
+    hOffset = -13;
     scale([0.1, 0.1, 0.1]) {
         translate([x, y, hOffset]) { Bolt(); }
         translate([displayBoardWidth - x, y, hOffset]) { Bolt(); }
@@ -148,17 +148,17 @@ module DisplayMountingBolts() {
     module Bolt() {
         translate([0, 0, 0]) {
             cylinder(h, d = d);
-            translate([-d, -7, h / 2]) cube([d * 2 + 2, 14, h / 2]);
-            translate([-7, -d, h / 2]) cube([14, d * 2 + 2, h / 2]);
+            translate([-d, -7, h / 2]) cube([d * 2 + 2, 14, 21]);
+            translate([-7, -d, h / 2]) cube([14, d * 2 + 2, 21]);
         }
     }
 }
 
 module Bushing() {
-    d = 2; // Diameter of the bolt
+    d = 2.1; // Diameter of the bolt
     h = 1;
     difference() {
-        cylinder(h, d = d * 2);
+        cylinder(h, d = d * 1.75);
         translate([0, 0, -5]) cylinder(10, d = d);
     }
 }

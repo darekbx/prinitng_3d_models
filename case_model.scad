@@ -16,6 +16,9 @@ keyboardY = 40;
 displayX = 1;
 displayY = 0;
 
+switchX = 17;
+switchY = 1.3;
+
 displayBoardWidth = 405; // 40.5mm
 displayBoardHeight = 375; // 37.5mm
 displayWidth = 320;
@@ -57,6 +60,13 @@ if (showComponents) {
 
     translate([keyboardX, keyboardY, 11])
         KeyboardPlaceholder();
+    
+    translate([switchX, switchY, 3]) {
+        rotate([90, 0, 0]) {
+            SwitchPlaceholder();
+        }
+    }
+    //#PowerModulePlaceholder();
 }
 
 module Case() {
@@ -78,9 +88,14 @@ module Case() {
             translate([keyboardX, keyboardY, 10]) {
                 KeyboardPlaceholder();
             }
+            translate([switchX, switchY, 3]) {
+                rotate([90, 0, 0]) {
+                    SwitchPlaceholder();
+                }
+            }
             if (flat) {
-                translate([-10, -10, -5]) {
-                    cube([60, 110, 20]);
+                translate([-10, 5, -5]) {
+                    #cube([60, 110, 20]);
                 }
             }
         }
@@ -95,6 +110,9 @@ module Case() {
         if (!noKeys) {
             KeyboardKeys();
         }
+    }
+    translate([16, -1.6, 3]) {
+        SwitchMounting();
     }
     KeyboardMounting();
 }
@@ -182,7 +200,7 @@ module KeyboardKeys() {
                     }
                     translate([4, 4.5, 1]) {
                         rotate(180, [0,0,1])
-                        linear_extrude() text(text = labels[y][x], size = 4);
+                        linear_extrude() text(text = labels[y][x], size = 4, font ="Helvetica:style=Bold");
                     }
                 }
             }
@@ -261,6 +279,14 @@ module DisplayMountingBolts() {
     }
 }
 
+module SwitchMounting() {
+    padding = 1;
+    difference() {
+        cube([9 + padding * 2, 4 + padding * 1, 3.6 +  + padding]);
+        translate([1, 3.5, -0.1]) rotate([90, 0, 0]) SwitchPlaceholder();
+    }
+}
+
 module DisplayPlaceholder() {
     // https://www.waveshare.com/1.3inch-oled-b.htm
     // https://botland.com.pl/wyswietlacze-oled/4441-wyswietlacz-oled-niebieski-graficzny-13-b-128x64px-spi-i2c-proste-zlacza-waveshare-10451-5904422371968.html
@@ -332,4 +358,26 @@ module KeyboardPlaceholder() {
             cylinder(10, d = 35);
         }
     }
+}
+
+module SwitchPlaceholder() {
+    cube([9, 4, 3.6]);
+    translate([3.6, 1.3, 3.6]) cube([1.5, 1.5, 2.3]);
+    
+    // cables
+    rotate([90, 0, 0]) {
+        translate([2, 0, 0]) cylinder(h = 12, d = 1);
+        translate([4.5, 0, 0]) cylinder(h = 12, d = 1);
+        translate([7, 0, 0]) cylinder(h = 12, d = 1);
+    }
+}
+
+module PowerModulePlaceholder() {
+    cube([27.6, 17.1, 1.7]);
+    // USB connector
+    translate([0, (17.1 - 7.5) / 2, 1.7]) cube([5.4, 7.5, 2.8]);
+    // Jumper
+    translate([12.2, 1, 1.7]) cube([2.2, 3.9, 6.3]);
+    // Battery connector
+    translate([9, 17.1 - 1.8 - 5, 1.7]) cube([3.5, 5, 7.5]);
 }
