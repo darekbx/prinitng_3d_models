@@ -13,15 +13,15 @@ noDisplay = false;
 keyboardX = 0;
 keyboardY = 40;
 
-displayX = 1;
+displayX = 3;
 displayY = 0;
 
-switchX = 17;
-switchY = 1.3;
+switchX = 41;
+switchY = 14;
 
-displayBoardWidth = 405; // 40.5mm
-displayBoardHeight = 375; // 37.5mm
-displayWidth = 320;
+displayBoardWidth = 358;
+displayBoardHeight = 340;
+displayWidth = 344;
 displayHeight = 190;
 
 // https://openscad.org/cheatsheet/
@@ -62,7 +62,7 @@ if (showComponents) {
         KeyboardPlaceholder();
     
     translate([switchX, switchY, 3]) {
-        rotate([90, 0, 0]) {
+        rotate([90, 0, 90]) {
             SwitchPlaceholder();
         }
     }
@@ -73,7 +73,7 @@ module Case() {
     difference() {
         minkowski() {
             sphere(2.2);
-            cube([42, 90, 15]);
+            translate([0, 0, 3]) cube([42, 90, 12]);
         }
         {
             translate([-1, -1, -9]) {
@@ -89,13 +89,16 @@ module Case() {
                 KeyboardPlaceholder();
             }
             translate([switchX, switchY, 3]) {
-                rotate([90, 0, 0]) {
+                rotate([90, 0, 90]) {
                     SwitchPlaceholder();
                 }
             }
             if (flat) {
-                translate([-10, 5, -5]) {
-                    #cube([60, 110, 20]);
+                translate([-5, 25, -5]) {
+                    cube([60, 110, 20]);
+                }
+                translate([-22, -10, -5]) {
+                    cube([60, 110, 20]);
                 }
             }
         }
@@ -111,8 +114,10 @@ module Case() {
             KeyboardKeys();
         }
     }
-    translate([16, -1.6, 3]) {
-        SwitchMounting();
+    translate([43.5, 13, 3]) {
+        rotate([0, 0, 90]) {
+            SwitchMounting();
+        }
     }
     KeyboardMounting();
 }
@@ -144,7 +149,7 @@ module KeyboardMounting() {
     module Mounting1() {
         cube([2, 5, 8]);
         translate([1, 0, 0]) {
-            cube([2, 5, 2]);
+            cube([2, 5, 1.5]);
         }
     }
     
@@ -152,8 +157,8 @@ module KeyboardMounting() {
         cube([1.5, 5, 8]);
         translate([-1, 0, 0]) {
             difference() {
-                translate([-0.25, 0, 0]) {
-                    cube([2, 5, 2]);
+                translate([0, 0, 0]) {
+                    cube([2, 5, 1.5]);
                 }
                 translate([-2, -0.5, 0.25]){
                     rotate([0, 45, 0]) {
@@ -167,7 +172,7 @@ module KeyboardMounting() {
 
 module KeyboardKeys() {
     vSpace = 3.6;
-    hSpace = 2.8;
+    hSpace = 2.9;
     switchSize = 6; // 6mm
     
     labelIndex = 0;
@@ -212,7 +217,7 @@ module DisplayFrame() {
     frameHeightOffset = -2;
     frameHeight = 12;
     xPos = (displayBoardWidth - displayWidth) / 2;
-    yPos = 80; // 8mm
+    yPos = 58; // 8mm
     width = displayWidth - 20;
     height = displayHeight - 20;
         scale([0.1, 0.1, 0.1]) {
@@ -224,7 +229,7 @@ module DisplayFrame() {
                             translate([5, 12, -(displayHeight + 5)]) {
                                 cylinder(h = displayHeight, d = 20);
                             }
-                            translate([325, 12, -(displayHeight + 5)]) {
+                            translate([displayWidth + 5, 12, -(displayHeight + 5)]) {
                                 cylinder(h = displayHeight, d = 20);
                             }
                         }
@@ -254,12 +259,12 @@ module DisplayFrame() {
 }
 
 module DisplayMountingBolts() {
-    x = 25; // X position offset
-    y = 25; // Y position offset
-    d = 27; // Diameter of the bolt
+    x = 11 + 30 / 2; // Hole X position offset
+    y = 12 + 30 / 2; // Hole Y position offset
+    d = 29; // Diameter of the bolt
     sd = 16; // Screw hole diameter
-    h = 47; // Height of the bolt
-    hOffset = 2.5;
+    h = 52; // Height of the bolt
+    hOffset = 0;
     scale([0.1, 0.1, 0.1]) {
         translate([x, y, hOffset]) { Bolt(); }
         translate([displayBoardWidth - x, y, hOffset]) { Bolt(); }
@@ -271,8 +276,8 @@ module DisplayMountingBolts() {
         difference() { 
             translate([0, 0, 0]) {
                 cylinder(h, d = d);
-                translate([-d, -5, h / 2]) cube([d * 2, 10, h / 2]);
-                translate([-5, -d, h / 2]) cube([10, d * 2, h / 2]);
+                translate([-d, -5, 28]) cube([d * 2, 10, 15]);
+                translate([-5, -d, 28]) cube([10, d * 2 + 5, 15]);
             }
             translate([0, 0, -2]) cylinder(h, d = sd);
         }
@@ -282,8 +287,22 @@ module DisplayMountingBolts() {
 module SwitchMounting() {
     padding = 1;
     difference() {
-        cube([9 + padding * 2, 4 + padding * 1, 3.6 +  + padding]);
-        translate([1, 3.5, -0.1]) rotate([90, 0, 0]) SwitchPlaceholder();
+        translate([0, 0, 0]) {
+            cube([9 + padding * 2, 3 + padding * 1, 3.6 +  + padding]);
+            translate([0, 0.5, 1]) {
+                rotate([45, 0, 0]) {
+                    cube([9 + padding * 2, 5, 7]);
+                }
+            }
+        }
+        {
+            translate([1, 3.5, -0.4]) 
+                rotate([90, 0, 0]) 
+                    scale([1, 1.1, 1]) 
+                        SwitchPlaceholder();
+            translate([-1, -6, -1]) cube([14, 6, 12]);
+            translate([1, 5.5, -1.5]) rotate([90, 0, 0]) SwitchPlaceholder();
+        }
     }
 }
 
@@ -292,8 +311,8 @@ module DisplayPlaceholder() {
     // https://botland.com.pl/wyswietlacze-oled/4441-wyswietlacz-oled-niebieski-graficzny-13-b-128x64px-spi-i2c-proste-zlacza-waveshare-10451-5904422371968.html
     thickness = 15; // 1.8mm
     d = 30; // Hole diameter, 3mm
-    x = 25; // Hole X position offset
-    y = 25; // Hole Y position offset
+    x = 11 + 30 / 2; // Hole X position offset
+    y = 12 + 30 / 2; // Hole Y position offset
     scale([0.1, 0.1, 0.1]) {
         difference() {
             cube([displayBoardWidth, displayBoardHeight, thickness]);
@@ -305,7 +324,7 @@ module DisplayPlaceholder() {
             }
         }
         xPos = (displayBoardWidth - displayWidth) / 2;
-        yPos = 80; // 8mm
+        yPos = 58;
         translate([xPos, yPos, 20]) {
             color("black") {
                 cube([displayWidth, displayHeight, 30]);
@@ -328,7 +347,7 @@ module KeyboardPlaceholder() {
         offsetLeft = 35; // 5.5mm
         offsetTop = 20; // 2mm
         vSpace = 36; // 3.6mm
-        hSpace = 28; // 2.8mm
+        hSpace = 29; // 2.8mm
         switchSize = 60; // 6mm
         
         translate([offsetLeft, offsetTop, 0]) {
