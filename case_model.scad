@@ -2,13 +2,14 @@
 
 $fa = 1;
 $fs = 0.4;
-$fn = 100;
+$fn = 25;
 
 showComponents = false;
 flat = true;
-noKeyboard = false;
+noKeyboard = true;
 noKeys = false;
-noDisplay = false;
+noDisplay = true;
+noKeyMask = true;
 
 keyboardX = 0;
 keyboardY = 40;
@@ -29,6 +30,23 @@ displayHeight = 190;
 // ! show only 
 // # highlight
 // * disable
+
+if (noKeyboard && !noKeys) {
+    !KeyboardKeys();
+}
+
+module SwitchBall() {
+    difference() {
+        translate([0, 0, 0]) {
+            sphere(d = 5);
+            cube([10, 4, 1], true);
+        }
+        translate([-5, -5, 0]) {
+            translate([0, 0, 0.5]) cube([10, 10, 5]);
+            translate([5, 5, 0]) cube([1.6, 1.6, 4], true);
+        }
+    }
+}
 
 difference() {
     Case();
@@ -135,11 +153,17 @@ module KeyboardMounting() {
     translate([keyboardX - 2, keyboardY - 0.5, 8]) {
         Mounting1();
     }
+    translate([keyboardX - 2, keyboardY + 20, 8]) {
+        Mounting1();
+    }
     translate([keyboardX - 2, keyboardY + 40, 8]) {
         Mounting1();
     }
     
     translate([keyboardX + 39.5, keyboardY + 2, 8]) {
+        Mounting2();
+    }
+    translate([keyboardX + 39.5, keyboardY + 19, 8]) {
         Mounting2();
     }
     translate([keyboardX + 39.5, keyboardY + 38, 8]) {
@@ -159,10 +183,22 @@ module KeyboardMounting() {
             difference() {
                 translate([0, 0, 0]) {
                     cube([2, 5, 1.5]);
+                    difference() {
+                        translate([0.5, 2, 4]) {
+                            rotate([105, 0, 90]) {
+                                cube([1, 5, 2]);
+                            }
+                        }
+                        translate([0, 1.5, 3]) {
+                            cube([1, 2, 4]);
+                        }
+                    }
                 }
-                translate([-2, -0.5, 0.25]){
-                    rotate([0, 45, 0]) {
-                        cube([3, 6, 2]);
+                translate([0, 0, 0]) {
+                    translate([-2, -0.5, 0.25]){
+                        rotate([0, 45, 0]) {
+                            cube([3, 6, 2]);
+                        }
                     }
                 }
             }
@@ -172,19 +208,24 @@ module KeyboardMounting() {
 
 module KeyboardKeys() {
     vSpace = 3.6;
-    hSpace = 2.9;
+    hSpace = 3.2;
     switchSize = 6; // 6mm
     
     labelIndex = 0;
     labels = [
         ["<", "9", "8", "7"],
-        ["-", "6", "5", "4"],
+        ["_", "6", "5", "4"],
         ["", "3", "2", "1"],
         ["=", "", "0", ""]
     ];
-    
+    offset = [
+        [0.75, 0, 0, 0],
+        [2.75, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0.75, 0, 0, 0]
+    ];
     for (y = [0:3]) {
-        for (x = [0:3]) {       
+        for (x = [0:3]) { 
             translate([
                 1.5 + (switchSize + vSpace) * x, 
                 2.5 + (switchSize + hSpace) * y, 
@@ -193,23 +234,41 @@ module KeyboardKeys() {
                 difference() {
                     {
                         if (labels[y][x] == "") {
-                            translate([-1, -1, 0.3]) {
-                                cube([8, 8, 1.2]);
+                            if (!noKeyMask) {
+                                // Mask
+                                translate([-1, -1, 0.3]) {
+                                    cube([8, 8, 1.2]);
+                                }
                             }
                         } else {
-                            cube([5, 5, 1.5]);
-                            translate([1.5, 0, 1]) {
-                                cube([2, 7, 0.5]);
+                            translate([0.125, 0.125, 0.25]) {
+                                minkowski() {
+                                    sphere(d = 1);    
+                                    cube([4.75, 4.75, 1.5]);
+                                }
                             }
+                            translate([-1, -1, 0]) cube([7, 7, 0.25]);
                         }
                     }
-                    translate([4, 4.5, 1]) {
-                        rotate(180, [0,0,1])
-                        linear_extrude() text(text = labels[y][x], size = 4, font ="Helvetica:style=Bold");
+                    {
+                        translate([4, 4.5 - offset[y][x], 1.5]) {
+                            rotate(180, [0,0,1])
+                            linear_extrude() 
+                                text(
+                                    text = labels[y][x], 
+                                    size = 4, 
+                                    font ="Helvetica:style=Bold"
+                                );
+                        }
+                        translate([-1, -1, -1]) {
+                            cube([7, 7, 1]);
+                        }
                     }
                 }
             }
+            translate([4, 4 + y * 9, 0]) cube([29.5, 2, 0.25]);
         }
+            translate([3 + y * 9.5, 3, 0]) cube([2, 30, 0.25]);
     }
 }
 
@@ -347,7 +406,7 @@ module KeyboardPlaceholder() {
         offsetLeft = 35; // 5.5mm
         offsetTop = 20; // 2mm
         vSpace = 36; // 3.6mm
-        hSpace = 29; // 2.8mm
+        hSpace = 32; // 2.8mm
         switchSize = 60; // 6mm
         
         translate([offsetLeft, offsetTop, 0]) {
