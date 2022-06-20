@@ -5,10 +5,10 @@ $fs = 0.4;
 $fn = 25;
 
 showComponents = false;
-flat = true;
-noKeyboard = true;
-noKeys = false;
-noDisplay = true;
+flat = false;
+noKeyboard = false;
+noKeys = true;
+noDisplay = false;
 noKeyMask = true;
 
 keyboardX = 0;
@@ -30,6 +30,15 @@ displayHeight = 190;
 // ! show only 
 // # highlight
 // * disable
+
+checkMark = [ 
+    [0,3], 
+    [2,0], 
+    [6,4.5], 
+    [6.5,6], 
+    [2,1.5],
+    [0.5,3.5]
+  ];
 
 if (noKeyboard && !noKeys) {
     !KeyboardKeys();
@@ -213,16 +222,22 @@ module KeyboardKeys() {
     
     labelIndex = 0;
     labels = [
-        ["<", "9", "8", "7"],
-        ["_", "6", "5", "4"],
-        ["", "3", "2", "1"],
-        ["=", "", "0", ""]
+        ["x", "2", "1", "0"],
+        ["M", "5", "4", "3"],
+        ["_", "8", "7", "6"],
+        ["=", ">", "9", "<"]
     ];
-    offset = [
-        [0.75, 0, 0, 0],
-        [2.75, 0, 0, 0],
+    offsetX = [
         [0, 0, 0, 0],
-        [0.75, 0, 0, 0]
+        [-0.75, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ];
+    offsetY = [
+        [0.5, 0, 0, 0],
+        [0, 0, 0, 0],
+        [2.75, 0, 0, 0],
+        [0.75, 0.75, 0, 0.75]
     ];
     for (y = [0:3]) {
         for (x = [0:3]) { 
@@ -233,42 +248,34 @@ module KeyboardKeys() {
             ) {
                 difference() {
                     {
-                        if (labels[y][x] == "") {
-                            if (!noKeyMask) {
-                                // Mask
-                                translate([-1, -1, 0.3]) {
-                                    cube([8, 8, 1.2]);
-                                }
+                        translate([0.125, 0.125, 0.25]) {
+                            minkowski() {
+                                sphere(d = 1);    
+                                cube([4.75, 4.75, 1.5]);
                             }
-                        } else {
-                            translate([0.125, 0.125, 0.25]) {
-                                minkowski() {
-                                    sphere(d = 1);    
-                                    cube([4.75, 4.75, 1.5]);
-                                }
-                            }
-                            translate([-1, -1, 0]) cube([7, 7, 0.25]);
                         }
                     }
                     {
-                        translate([4, 4.5 - offset[y][x], 1.5]) {
-                            rotate(180, [0,0,1])
-                            linear_extrude() 
-                                text(
-                                    text = labels[y][x], 
-                                    size = 4, 
-                                    font ="Helvetica:style=Bold"
-                                );
+                        translate([4 - offsetX[y][x], 4.5 - offsetY[y][x], 1.5]) {
+                            rotate(180, [0,0,1]) {
+                                linear_extrude() 
+                                    text(
+                                        text = labels[y][x], 
+                                        size = 4, 
+                                        font ="Helvetica:style=Bold"
+                                    );
+                            }
                         }
                         translate([-1, -1, -1]) {
                             cube([7, 7, 1]);
                         }
                     }
                 }
+                        translate([-1, -1, 0]) cube([7, 7, 0.25]);
             }
             translate([4, 4 + y * 9, 0]) cube([29.5, 2, 0.25]);
         }
-            translate([3 + y * 9.5, 3, 0]) cube([2, 30, 0.25]);
+        translate([3 + y * 9.5, 3, 0]) cube([2, 30, 0.25]);
     }
 }
 
