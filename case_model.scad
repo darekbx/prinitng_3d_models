@@ -31,6 +31,8 @@ displayHeight = 190;
 // # highlight
 // * disable
 
+//translate([-7, 0, -15])#cube([5, 5, 32]);
+
 checkMark = [ 
     [0,3], 
     [2,0], 
@@ -42,6 +44,34 @@ checkMark = [
 
 if (noKeyboard && !noKeys) {
     !KeyboardKeys();
+}
+
+!CaseCover();
+
+module CaseCover() {
+    difference() {
+        minkowski() {
+            sphere(2.2);
+            cube([42, 90, 1]);
+        }
+        translate([-10, -4, -5]) {
+            cube([60, 100, 6]);
+        }
+    }
+    CaseCoverFrame();
+}
+
+module CaseCoverFrame() {
+    translate([-0.95, -0.95, -3]) {
+        difference() {
+            w = 43.9;
+            h = 91.9;
+            cube([w, h, 5]);
+            translate([1, 1, -0.5]) {
+                cube([w - 1 * 2, h - 1 * 2, 10]);
+            }
+        }
+    }
 }
 
 module SwitchBall() {
@@ -73,10 +103,18 @@ difference() {
                 cube([60, 30, 25]);
             }
         }
-        if (flat) {            
+        translate([0, 91, 8]) {
+            rotate([90, 180, 90]) {
+                PowerModulePlaceholder();
+            }
+        }
+        if (flat) {
             translate([-10, 86, 0]) {
                 cube([60, 20, 20]);
             }
+        }
+        translate([-10, -4, -25]) {
+            cube([60, 100, 10]);
         }
     }
 }
@@ -93,18 +131,22 @@ if (showComponents) {
             SwitchPlaceholder();
         }
     }
-    //#PowerModulePlaceholder();
+    translate([0, 91, 8]) {
+        rotate([90, 180, 90]) {
+            #PowerModulePlaceholder();
+        }
+    }
 }
 
 module Case() {
     difference() {
         minkowski() {
             sphere(2.2);
-            translate([0, 0, 3]) cube([42, 90, 12]);
+            translate([0, 0, -16]) cube([42, 90, 31]);
         }
         {
-            translate([-1, -1, -9]) {
-                cube([44, 92, 25]);
+            translate([-1, -1, -19]) {
+                cube([44, 92, 35]);
             }
             translate([displayX, displayY, 13]) {
                 DisplayPlaceholder();
@@ -147,6 +189,16 @@ module Case() {
         }
     }
     KeyboardMounting();
+    PowerModuleHolder();
+}
+
+module PowerModuleHolder() {
+    translate([-1, 61.25, -10]) {
+        cube([4, 2, 18]);
+        translate([0.4, 2, 17.8]) 
+            rotate([90, 30, 0])
+                cube([3, 2, 2]);
+    }
 }
 
 module KeyboardMounting() {
@@ -223,7 +275,7 @@ module KeyboardKeys() {
     labelIndex = 0;
     labels = [
         ["x", "2", "1", "0"],
-        ["M", "5", "4", "3"],
+        ["R", "5", "4", "3"],
         ["_", "8", "7", "6"],
         ["=", ">", "9", "<"]
     ];
@@ -460,9 +512,10 @@ module SwitchPlaceholder() {
 module PowerModulePlaceholder() {
     cube([27.6, 17.1, 1.7]);
     // USB connector
-    translate([0, (17.1 - 7.5) / 2, 1.7]) cube([5.4, 7.5, 2.8]);
+    translate([-5, (17.1 - 7.5) / 2, 1.7]) cube([10.4, 7.5, 2.8]);
     // Jumper
     translate([12.2, 1, 1.7]) cube([2.2, 3.9, 6.3]);
     // Battery connector
     translate([9, 17.1 - 1.8 - 5, 1.7]) cube([3.5, 5, 7.5]);
 }
+
