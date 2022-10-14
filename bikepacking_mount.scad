@@ -4,13 +4,16 @@ withHolder = false;
 
 height = 160;
 depth = 60;
-thickness = 6;
-strapWidth = 25;
+thickness = 9;
+strapWidth = 14;
 strapHoldOffset = 10;
 cornersRadius = 2;
 strapCornersRadius = 1;
 insetWidth = 11;
 bolt = 5; // M5
+
+// Pump
+//translate([-100, 0, 24]) rotate([0, 90, 0]) #cylinder(h = 800, d = 39);
 
 Mounting();
 
@@ -44,10 +47,12 @@ module Mounting() {
                     }
                 }
             }
-            translate([64 / 2, 0, -10]) {
+            
+            holeOffset = 35;
+            translate([holeOffset + (64 / 2), 0, -10]) {
                 BoltHole();
             }
-            translate([-64 / 2, 0, -10]) {
+            translate([holeOffset + (-64 / 2), 0, -10]) {
                 BoltHole();
             }
         }
@@ -65,7 +70,7 @@ module Stick() {
     }
 
     offset = height / 2 - 2;
-    translate([offset, 0, -1]) {
+    translate([offset, 0, -2.5]) {
         RoundedEdge();
     }
 
@@ -87,7 +92,7 @@ module Stick() {
             }
         }
     } else {
-        translate([-height / 2 + 2, 0, -1]) {
+        translate([-height / 2 + 2, 0, -2.5]) {
             RoundedEdge();
         }
     }
@@ -101,16 +106,16 @@ module Stick() {
 }
 
 module StickInset(height) {
-    cube([height - 4, insetWidth, 4], true);
+    cube([height - 4, insetWidth, 8], true);
     
     offset = height / 2 - 2;
-    translate([offset, 0, -2]) {
-        cylinder(h = 4, d = insetWidth);
+    translate([offset, 0, -4]) {
+        cylinder(h = 7, d = insetWidth);
     }   
     
     if (!withHolder) {
-        translate([-height / 2 + 2, 0, -2]) {
-            cylinder(h = 4, d = insetWidth);
+        translate([-height / 2 + 2, 0, -4]) {
+            cylinder(h = 9, d = insetWidth);
         }   
     }
 }
@@ -122,38 +127,46 @@ module BoltHole() {
 }
 
 module StrapHold() {
-    rotate([25, 0, 0]) {
-        translate([0, strapHoldOffset - 18.75, 7.65]) {
+    rotate([10, 0, 0]) {
+        translate([0, strapHoldOffset - 24.65, 11.10]) {
             difference() {
                 minkowski() {
                     cube([
                         strapWidth + 3 * 2 - strapCornersRadius * 2, 
                         2 + 3 * 2 - strapCornersRadius * 2, 
-                        4 - strapCornersRadius * 2
+                        5 - strapCornersRadius * 2
                     ]);
                     sphere(d = 1);
                 }
                 translate([2, 1.5, -5]) cube([strapWidth, 3, 10]);
             }
-            rotate([0, 90, 0]) {
+            /*rotate([0, 90, 0]) {
                 translate([-2.25, 1.5, 2]) cylinder(h = strapWidth, d = 0.5);
                 translate([-2.25, 4.5, 2]) cylinder(h = strapWidth, d = 0.5);
                 translate([0.25, 1.5, 2]) cylinder(h = strapWidth, d = 0.5);
                 translate([0.25, 4.5, 2]) cylinder(h = strapWidth, d = 0.5);
-            }
-            translate([2, 0.75, -0.25]) cube([strapWidth, 1, 2.5]);
-            translate([2, 4.25, -0.25]) cube([strapWidth, 1, 2.5]);
+            }*/
+            //translate([2, 0.75, -0.25]) cube([strapWidth, 1, 2.5]);
+            //translate([2, 4.25, -0.25]) cube([strapWidth, 1, 2.5]);
         }
     }
-    rotate([15, 0, 0]) {
-        translate([5.5, -24, 6]) {
-            minkowski() {
-                cube([
-                    20 - strapCornersRadius * 2, 
-                    strapHoldOffset + 3 * 2 - strapCornersRadius * 2, 
-                    4 - strapCornersRadius * 2
-                ]);
-                sphere(d = 1);
+    difference() {
+        rotate([45, 0, 0]) {
+            translate([0, -18, 17]) {
+                    minkowski() {
+                        cube([
+                            20 - strapCornersRadius * 2, 
+                            strapHoldOffset + 3 * 2 - strapCornersRadius * 2, 
+                            5 - strapCornersRadius * 2
+                        ]);
+                        sphere(d = 1);
+                    }
+                }
+            }
+            
+        rotate([10, 0, 0]) {
+            translate([0, strapHoldOffset - 24.65, 11.10]) {
+                translate([2, 1.5, -5]) cube([strapWidth, 3, 10]);
             }
         }
     }
