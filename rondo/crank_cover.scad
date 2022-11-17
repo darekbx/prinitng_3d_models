@@ -1,4 +1,4 @@
-$fn = 90;
+$fn = 120;
 
 debug = false;
 
@@ -13,25 +13,46 @@ BCD = 90;
 BT  = 10; // Crank Cog bolt diameter
 
 RH = 2;
-D1 = 132.2;
+D1 = 132.5;
 D2 = 150;
 
-fullCover();
 
-module inner() {
-    difference() {
-        translate([0, 0, 1]) cylinder(h = 12, d = D2 - 1);
-        scale([1, 1, 10]) fullCover();
+difference() {
+    completeCover();
+    crankSideDiff();
+}
+
+/*
+ * Draw one part
+difference() {
+    completeCover();
+    translate([-5, -100, -20]) cube([100, 200, 50]);
+    translate([-100, -5, -20]) cube([200, 100, 50]);
+}*/
+
+module crankSideDiff() {
+    translate([5, 5, -34]) {
+        cube([50, 50, 30]);
     }
 }
 
-difference() {
-    translate([0, 0, -9]) { 
-        translate([0, 0, 2]) cylinder(d1 = 60, d2 = D1 - 0.4, h = 4);
-        translate([0, 0, 0]) cylinder(d1 = 60, d2 = 120 - 0.4, h = 8);
-        translate([0, 0, 6]) cylinder(d1 = D1 - 0.4, d2 = D1 - 0.4, h = 4);
+module completeCover() {
+    fullCover();
+    difference() {
+        translate([0, 0, -9]) { 
+            translate([0, 0, 2]) cylinder(d1 = 60, d2 = D1 - 0.4, h = 4);
+            translate([0, 0, -1]) cylinder(d1 = 60, d2 = 110 - 0.4, h = 8);
+            translate([0, 0, 6]) cylinder(d1 = D1 - 0.4, d2 = D1 - 0.4, h = 4);
+        }
+        translate([0, 0, -11]) inner();
     }
-    translate([0, 0, -11]) inner();
+}
+
+module inner() {
+    difference() {
+        translate([0, 0, 0]) cylinder(h = 13, d = D2 - 1);
+        scale([1, 1, 10]) fullCover();
+    }
 }
 
 module fullCover() {
