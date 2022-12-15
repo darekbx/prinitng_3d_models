@@ -1,4 +1,4 @@
-$fn = 90;
+$fn = 30;
 
 withHolder = false;
 
