@@ -165,7 +165,7 @@ module plateFront() {
 }
 
 module plateBack() {
-    difference() {
+    !difference() {
         translate([0, 0, 0]) {
             basePlate();
         }

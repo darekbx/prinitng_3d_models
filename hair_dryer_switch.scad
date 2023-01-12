@@ -1,11 +1,11 @@
 $fn = $preview ? 60 : 240;
 
-radius = 30;
+radius = 26;
 thickness = 1.3;
 height = 51;
 
-left();
-translate([32, 0, 0]) right();
+//left();
+translate([20, -3, 0]) rotate([0, 0, -18]) right();
 
 module right() {
     mirror([1,0,0]) left();
@@ -21,29 +21,31 @@ module left() {
 
     //translate([0, 0, -4]) base(height);
 
-    rounded_base();
+    translate([0, 4, 0]) rounded_base();
 
     translate([1, 26, 13]) switch_holder();
-    translate([3.5, 31, 19]) handle();
+    translate([5.5, 31, 23]) handle();
 }
 
 module handle() {
     rotate([0, 0, -9]) { 
         minkowski() {
-            cube([10, 5, 4]);
+            cube([6, 2.5, 2]);
             difference() {
-                sphere(r = 1);
-                translate([-1, -2, -1]) cube([2, 2, 2]);
+                rotate([90, 0, 0]) sphere(r = 2);
+                translate([-2, -4, -2]) cube([4, 4, 4]);
             }
         }
     }
 }
 
 module switch_holder() {
-    wall_thickness = 1.5;
-    cube([6, 5, wall_thickness]);
-    translate([1, 3.0, 1]) cube([wall_thickness, 2, 7]);
-    translate([0, 0, 6.1 + wall_thickness]) cube([6, 5, wall_thickness]);
+    rotate([0, 0, -9]) { 
+        wall_thickness = 1.5;
+        cube([7, 5, wall_thickness]);
+        translate([0, 0, 6.1 + wall_thickness]) cube([7, 5, wall_thickness]);
+        translate([5.5, 3.5, 1]) cube([wall_thickness, 2.5, 7]);
+    }
 }
 
 module rounded_base() {
@@ -57,7 +59,7 @@ module rounded_base() {
         }
         translate([3.5, 0.3, -6]) cylinder(r = radius, h = height + 10);
         translate([-2, 0.7, -6]) cylinder(r = radius, h = height + 10);
-        translate([15 - 14.5, -50, -5]) rotate([0, 0, -10]) cube([100, 100, height + 2]);
+        translate([15 - 14.5, -48.5, -5]) rotate([0, 0, -10]) cube([100, 100, height + 2]);
     }
 }
 
