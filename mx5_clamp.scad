@@ -1,10 +1,12 @@
 include <libs/cyl_head_bolt.scad>
 
-$fn = 20;
+$fn = 50;
 
 d = 40; // hole diameter
 h = 18; // height
 t = 13; // clamp thickness
+
+#translate([-2, 0, 20]) cube([14, 5, 11]);
 
 difference() {
     clamp();

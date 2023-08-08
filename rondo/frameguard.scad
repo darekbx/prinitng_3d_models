@@ -1,42 +1,12 @@
-use <../libs/bend.scad>
+$fn = $preview ? 180 : 130; 
 
-$fn = 45;
-
-holesDistance = 64;
-
-width = 170;   // width of rectangle
-height = 1;   // height of rectangle
-r = 50;       // radius of the curve
-a = 40;       // angle of the curve
-
-//base3();
-/*
-module base3() {
-    difference() {
-        cylinder(h = 170, d = 40);
-        translate([-5, -20, -1]) cube([50, 50, 172]);
-        translate([-20, 0, -1]) #cube([50, 50, 172]);
-    }
-}*/
+width = 190;
 
 
-minkowski() {
-    curve();
-    cylinder(h = 1, d = 5);
-}
-
-module curve() {
+translate([-100, 0, 0]) difference() {
+    cylinder(h = width, d = 200);
+    translate([-52, 0, -2]) cylinder(h = width + 10, d = 300);
+    translate([88, -37, -2]) #cube([10, 10, width + 10]);
+    translate([88, 26, -2]) #cube([10, 10, width + 10]);
     
-    translate([0, -40, -50]) rotate(-90, [0,0,1])
-      parabolic_bend([20, 150, 2], 0.007)
-        translate([20, 0, 0]) rotate(90, [0,0,1])
-        cube([width - 5 * 2, a - 5 * 2, 1]);
-}
-
-
-module base() {
-    translate([0, 0, r]) rotate([0, 90, 0])
-        rotate_extrude(angle = a) 
-            translate([r, 0, 0]) 
-                square(size = [height, width], center = true);
 }

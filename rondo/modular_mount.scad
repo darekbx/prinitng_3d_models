@@ -1,31 +1,68 @@
-$fn = $preview ? 45 : 120;
+include <../libs/cyl_head_bolt.scad>
 
-bolt = 5; // M5
-hammock_mount();
+$fn = $preview ? 45 : 60;
+
+bolt = 5.1; // M5
+
+//removable_mount();
+
+//mirror([0, 1, 0]) water_bottle_mount();
+
+//hammock_mount();
 //hammock_clamp_top();
 //hammock_clamp_bottom();
 
-//#translate([55, 0, -2.8]) frame_mount();
+//#translate([5, 0, -2.8]) frame_mount();
 //frame_mount();
-//spacer();
+//spacer(2);
+//translate([0, 15, 0]) spacer(3);
+
+hammock_mount_simple();
+
+module hammock_mount_simple() {
+    translate([50, 0, 7]) { 
+        removable_mount(1.05, 3);
+        translate([-98, 0, 0]) cube([96, 30, 6], true);
+    }
+    
+    difference() {
+        //translate([85, 0, 51]) scale([0.95, 0.7, 0.6]) rotate([0, 0, 270]) import("LargeBottleCage.stl");
+        translate([80, 0, 0]) cube([160, 30, 20], true);
+    }
+}
+
+module water_bottle_mount() {
+    removable_mount(1.05, 3);
+    
+    translate([0, -4, 9.5]) rotate([30, 0, 0]) difference() {
+        cube([100, 16, 6], true);
+        bolts();
+        translate([-52.51, 0, 0]) cube([5, 30, 10], true);
+        
+        translate([0, 0, 11]) screws();
+    }
+    translate([0, -11.50, 4.35]) rotate([63, 0, 0]) cube([100, 5.7, 5], true);
+    
+    translate([-46.25, -0.5, 7]) cube([7.5, 10, 8], true);
+    translate([-46.25, -4, 4]) cube([7.5, 12, 4], true);
+    
+    translate([25, -0.5, 7]) cube([5, 10, 8], true);
+    translate([25, -4, 4]) cube([5, 12, 4], true);
+}
 
 module hammock_mount() {
-    width = 120;
-    diameter = 100;
-    
     removable_mount();
     
-    translate([-57, 0, 0]) cube([16, 30, 6], true);
-    translate([70, 0, 0]) difference() {
-        cube([40, 30, 6], true);
+    translate([-54.5, 0, 0]) cube([11, 30, 6], true);
+    translate([65, 0, 0]) difference() {
+        cube([30, 30, 6], true);
         translate([-20, 0, -2.8]) scale([1.1, 1.015, 1.015]) frame_mount(false, false);
         translate([0, 0, -1.8]) cube([50, 21, 5], true);
         translate([-6, 0, 1]) minkowski() {
-            cube([30, 9, 5], true);
+            cube([20, 9, 5], true);
             cylinder(d = 5, h = 1);
         }
     }
-    
 }
     
 module hammock_clamp_top() {
@@ -57,16 +94,30 @@ module hammock_clamp_bottom() {
         translate([10, 0, 0]) scale([1.01, 1.01, 1.01]) cube([40, 30, 6], true);
         translate([10, 0, 5]) scale([1.01, 1.01, 1.01]) cube([40, 21, 6], true);
     }
+    
+    translate([-7.5, 0, -50]) rotate([0, 0, 0]) difference() {
+        cylinder(d = 100, h = 10);
+        translate([0, 0, -1]) cylinder(d = 94, h = 18);
+        translate([0, -50, -1]) cube([200, 100, 20]);
+    }    
+    
+    translate([-7.5, 5, -53]) rotate([90, 0, 0]) difference() {
+        cylinder(d = 100, h = 10);
+        translate([0, 0, -1]) cylinder(d = 94, h = 18);
+        translate([0, -50, -1]) cube([200, 100, 20]);
+        translate([-60, -97, -5]) cube([100, 100, 20]);
+    }
+
 }
 
-module removable_mount() {
+module removable_mount(scale = 1.025, h = 2.8) {
     w = 100 - 0.4;
     difference() {
         cube([100, 30, 6], true);
-        translate([4.2, 0, -2.8]) scale([1.1, 1.015, 1.015]) frame_mount(false, false);
+        translate([4.2, 0, -h]) scale([1.1, scale, scale]) frame_mount(false, false);
         translate([4.5, 0, -1.8]) cube([w, 21, 5], true);
         translate([-10, 0, 1]) minkowski() {
-            cube([60, 10, 5], true);
+            cube([60, 13.6, 5], true);
             cylinder(d = 5, h = 1);
         }
         
@@ -93,9 +144,9 @@ module removable_mount() {
     }
 }
 
-module spacer() {
+module spacer(height = 2) {
     difference() {
-        cylinder(d = 10, h = 1);
+        cylinder(d = 10, h = height);
         translate([0, 0, -1]) cylinder(d = 5.2, h = 4);
     }
 }
@@ -176,6 +227,16 @@ module bolts() {
     }
     translate([holeOffset + (-64 / 2), 0, -10]) {
         bolt_hole();
+    }
+}
+
+module screws() {
+    holeOffset = 0;
+    translate([holeOffset + (64 / 2), 0, -10]) {
+        nutcatch_parallel("M5", clh=0.1);
+    }
+    translate([holeOffset + (-64 / 2), 0, -10]) {
+        nutcatch_parallel("M5", clh=0.1);
     }
 }
 

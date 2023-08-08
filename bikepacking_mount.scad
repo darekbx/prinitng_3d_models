@@ -3,6 +3,7 @@ $fn = 30;
 withHolder = false;
 
 height = 160;
+width = 20;
 depth = 60;
 thickness = 9;
 strapWidth = 14;
@@ -14,25 +15,28 @@ bolt = 5; // M5
 
 // Pump
 //translate([-100, 0, 24]) rotate([0, 90, 0]) #cylinder(h = 800, d = 39);
+Mounting(true);
 
-Mounting();
 
-translate([34, 33, -1]) {
-    StrapHold();
-}
-translate([-(34 + strapWidth + 2 * 3), 33, -1]) {
-    StrapHold();
-}
-rotate([180, 0, 0]) {
-    translate([34, 33, 1]) {
-        mirror([0, 0, 1]) StrapHold();
+module SmallStrapHolds() {
+    translate([34, 33, -1]) {
+        StrapHold();
     }
-    translate([-(34 + strapWidth + 2 * 3), 33, 1]) {
-        mirror([0, 0, 1]) StrapHold();
+    translate([-(34 + strapWidth + 2 * 3), 33, -1]) {
+        StrapHold();
+    }
+    rotate([180, 0, 0]) {
+        translate([34, 33, 1]) {
+            mirror([0, 0, 1]) StrapHold();
+        }
+        translate([-(34 + strapWidth + 2 * 3), 33, 1]) {
+            mirror([0, 0, 1]) StrapHold();
+        }
     }
 }
 
-module Mounting() {
+
+module Mounting(holes = true) {
     difference() {
         Stick();
         {
@@ -47,13 +51,17 @@ module Mounting() {
                     }
                 }
             }
-            
-            holeOffset = 35;
-            translate([holeOffset + (64 / 2), 0, -10]) {
-                BoltHole();
-            }
-            translate([holeOffset + (-64 / 2), 0, -10]) {
-                BoltHole();
+            if (holes) {
+                holeOffset = 32;
+                translate([holeOffset + (64 / 2), 0, -10]) {
+                    BoltHole();
+                }
+                translate([holeOffset + (-64 / 2), 0, -10]) {
+                    BoltHole();
+                }
+                translate([holeOffset + (-128 + 64 / 2), 0, -10]) {
+                    BoltHole();
+                }
             }
         }
     }
@@ -64,7 +72,7 @@ module Stick() {
         sphere(cornersRadius);
         cube([
             height - cornersRadius * 2, 
-            20 - cornersRadius * 2, 
+            width - cornersRadius * 2, 
             thickness - cornersRadius * 2
         ], true);
     }
@@ -85,7 +93,7 @@ module Stick() {
                     sphere(cornersRadius);
                     cube([
                         depth - cornersRadius * 2, 
-                        20 - cornersRadius * 2, 
+                        width - cornersRadius * 2, 
                         thickness - cornersRadius * 2
                     ], true);
                 }

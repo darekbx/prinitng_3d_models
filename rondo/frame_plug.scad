@@ -25,7 +25,7 @@ module plug() {
         translate([0, 1.9, -1]) 
             rotate([a, 0, 0]) {
                 cylinder(r = r1, h = 15);
-                translate([0, 0, 13]) cylinder(r1 = r1 + 0.5, r2 = r1, h = 2);
+                translate([0, 0, 13]) cylinder(r1 = r1 + 0.3, r2 = r1, h = 2);
         }
         translate([-0.5, -8, 0]) rotate([a, 0, 0]) cube([1, 10, 10]);
     }
