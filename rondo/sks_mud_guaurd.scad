@@ -1,4 +1,4 @@
-use <bend.scad>
+
 $fn = 90;
 
 difference() {

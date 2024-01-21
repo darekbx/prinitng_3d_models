@@ -1,7 +1,7 @@
-$fn = $preview ? 22 : 60;
+$fn = $preview ? 22 : 270;
 
 front = false;
-is_commencal = true;
+is_commencal = false;
 
 disc_diameter = 160;
 cover_offset = 4;

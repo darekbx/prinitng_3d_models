@@ -1,7 +1,7 @@
 $fn = 45;
 
-w = 108;
-h = 70;
+w = 107;
+h = 68;
 d = 15;
 e = 24;
 
@@ -26,7 +26,7 @@ difference() {
 
 module b() {
     minkowski() {
-        cube([88, 2, d], true);
-        cylinder(d = 3, h = 0.01);
+        cube([86, 1, d], true);
+        cylinder(d = 5, h = 0.01);
     }
 }

@@ -8,7 +8,7 @@ $fn = 60;
  1 - back plate
  2 - front plate
 */
-show_part = -1; 
+show_part = 2; 
 
 mount_to_tube_position = 100;
 

@@ -1,12 +1,12 @@
-$fn = $preview ? 180 : 130; 
+$fn = 90;
 
-width = 190;
+diameter = 100;
+width = 160;
+thickness = 2;
 
-
-translate([-100, 0, 0]) difference() {
-    cylinder(h = width, d = 200);
-    translate([-52, 0, -2]) cylinder(h = width + 10, d = 300);
-    translate([88, -37, -2]) #cube([10, 10, width + 10]);
-    translate([88, 26, -2]) #cube([10, 10, width + 10]);
+difference() {
+    cylinder(d = diameter, h = width);
+    translate([0, 0, -0.5]) cylinder(d = diameter - thickness * 2, h = width + 1);
     
+    translate([-12, 0, width / 2]) cube([100, diameter + 2, width + 2], true);
 }

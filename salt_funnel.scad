@@ -25,6 +25,6 @@ module tube(h, d2 = 50) {
     d1 = 50;
     difference() {
         cylinder(d1 = d1, d2 = d2, h = h);
-        translate([0, 0, -1]) cylinder(d1 = d1 - 2, d2 = d2 - 2, h = h + 2);
+        translate([0, 0, -1]) cylinder(d1 = d1 - 3, d2 = d2 - 3, h = h + 2);
     }
 }
