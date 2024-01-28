@@ -8,7 +8,7 @@ $fn = 60;
  1 - back plate
  2 - front plate
 */
-show_part = 2; 
+show_part = 0; 
 
 mount_to_tube_position = 100;
 
@@ -24,6 +24,14 @@ mount_height = 32;
 mount_width = 17;
 mount_thickness = 5;
 frame_tube_diameter = 32.5;
+
+    !difference() {
+        translate([0, 0, 0]) {
+            mountBase();
+            //guideHandle();
+        }
+        tube();
+    }
 
 if (show_part == -1 || show_part == 0) {
     difference() {
