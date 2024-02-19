@@ -25,13 +25,50 @@ mount_width = 17;
 mount_thickness = 5;
 frame_tube_diameter = 32.5;
 
-    !difference() {
+!key_handle();
+
+module key_handle() {
+    difference() {
         translate([0, 0, 0]) {
-            mountBase();
+                rotate([90 - mount_angle, 90, 0]) {
+                    translate([
+                        -mount_to_tube_position - mount_height / 4 + 6, 
+                        -mount_width / 2 + 6, 
+                        mount_to_tube_position - 86
+                    ]) {
+                        minkowski() {
+                            cube([mount_height - 12, mount_width - 9.75, mount_thickness - 1]);
+                            {
+                                cylinder(d = 12);
+                                sphere(r = 1);
+                            }
+                        }
+                    }
+                }
             //guideHandle();
         }
         tube();
+        
+
+        translate([16, -11, 116]) rotate([0, 180, 40]) {
+            kd = 3.6; 
+            an = -20;
+            rotate([0, 0, 30]) cylinder(d=kd, h=56, $fn=6);
+            translate([0, 0, 6.3]) rotate([0, 0, 30]) cylinder(d1=4, d2 = 3.5, h=3, $fn=90);
+            //translate([1, 0, 6]) rotate([an, an, 30]) cylinder(d=3.5, h=4, $fn=90);
+            rotate([0, 90, 0]) rotate([0, 0, 30]) cylinder(d=kd, h=20, $fn=6);
+            translate([4, 0, 5]) rotate([0, -45, 0]) rotate([0, 0, 30]) cylinder(d=kd, h=6);
+        }
     }
+}
+
+!difference() {
+    translate([0, 0, 0]) {
+        mountBase();
+        //guideHandle();
+    }
+    tube();
+}
 
 if (show_part == -1 || show_part == 0) {
     difference() {
@@ -139,7 +176,7 @@ module tube() {
         }
     }
     module diameterCollar() {
-        translate([0, 0, mount_to_tube_position + 2]) {
+        translate([0, 0, mount_to_tube_position + 3]) {
             cylinder(d1 = hole_diameter, d2 = bolt_collar, h = bolt_collar_height);
         }
     }

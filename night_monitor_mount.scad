@@ -30,11 +30,10 @@ module atomMount() {
             translate([0, 0, 7.1]) cylinder(d = 6, h = 1.5);
         }
     }
-    translate([10.5, -4, 0]) {
+    translate([9, 0, 0]) {
         difference() {
-            cube([6, 8, 18]);
-            translate([3, 9, 15]) rotate([90, 0, 0]) cylinder(d = 2.5, h = 20);
-            translate([3, 9, 15]) rotate([90, 0, 0]) cylinder(d = 4.5, h = 6);
+            cube([6, 100, 8]);
+            rotate([-5, 0, 0]) translate([-1, 0, 10]) cube([8, 100, 8]);
         }
     }
     
