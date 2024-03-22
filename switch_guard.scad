@@ -6,13 +6,13 @@ difference() {
 }
 
 module body() {
-    cube([43.5, 100, 59], true);
+    cube([42.5, 100, 59], true);
     translate([24, 0, 0]) cube([12, 26, 34], true);
 }
 
 module guard() {
     translate([0.5, 0, 0]) difference() {
-        cube([43.5 + 2, 35, 59 + 2], true);
+        cube([43.5 + 1.5, 35, 59 + 2.5], true);
         translate([2, 0, 0]) cube([43.5 + 1, 38, 50], true);
     }
     
