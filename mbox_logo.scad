@@ -3,10 +3,12 @@ $fn = 90;
 cut_off = false;
 screw_check = false;
 
-if (false&&$preview) {
+!design();
+
+if (true&&$preview) {
     difference() {
         design();
-        if (cut_off) translate([-5, 0, -20]) cube([10, 200, 100]);
+        if (cut_off) translate([-5, 0, 0]) cube([10, 200, 100]);
     }
 } else {
     difference() {
@@ -33,8 +35,8 @@ module placement() {
 module design() {
     logo_top();
     logo_bottom();
-    bolt_cap();
-    translate([size, 0, 0]) bolt_cap();
+    //bolt_cap();
+    //translate([size, 0, 0]) bolt_cap();
     
     if (false) {
         translate([size/2, (size + p) * 5 - size/2, (size + p)-14.1])
@@ -52,7 +54,7 @@ module screw() {
 module logo_top() {
     difference() {
         top();
-        translate([0, 0, -0.1]) {
+        /*translate([0, 0, -0.1]) {
             translate([size/2, (size + p) * 5 - size/2, (size + p)]) {
                 cylinder(d = d, h = 2.4);
                 cylinder(d = bolt, h = 8);
@@ -61,12 +63,12 @@ module logo_top() {
                 cylinder(d = d, h = 2.4);
                 cylinder(d = bolt, h = 8);
             }
-        }
+        }*/
     }
 }
 
 module logo_bottom() {
-    translate([0, 0, -10]) base_with_bolts(d - 0.2, offset = 1);
+    translate([0, 0, -0]) base_with_bolts(d - 0.2, offset = 1);
 }
 
 module bolt_cap() {
@@ -83,14 +85,14 @@ module top() {
 module base_with_bolts(d, offset) {
     difference() {
         base(); 
-        translate([size/2, (size + p) * 5 - size / 2, (size + p) - offset - 9.1]) {
+        /*translate([size/2, (size + p) * 5 - size / 2, (size + p) - offset - 9.1]) {
             cylinder(d = bolt_head, h = 8);
             cylinder(d = bolt + 0.5, h = 20);
-        }
-        translate([(size + p) * 4 - size/2, (size + p)+size/2, (size + p) - offset - 9.1]) {
+        }*/
+        /*translate([(size + p) * 4 - size/2, (size + p)+size/2, (size + p) - offset - 9.1]) {
             cylinder(d = bolt_head, h = 8);
             cylinder(d = bolt + 0.5, h = 20);
-        }
+        }*/
         napis();
     }
     translate([size/2, (size + p) * 5 - size/2, (size + p)]) {
