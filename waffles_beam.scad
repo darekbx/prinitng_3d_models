@@ -44,5 +44,9 @@ module beams() {
 
 module mount() {
     cube(s);
+    translate([s-1, -0.5, 0]) minkowski() {
+        cube([2, s, s]);
+        sphere(d = 1, $fn =20);
+    }
     translate([-2, 0, -s]) cube([2, s, s * 2]); 
 }
