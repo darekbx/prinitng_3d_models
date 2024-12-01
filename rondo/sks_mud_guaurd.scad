@@ -26,9 +26,9 @@ module mount() {
 
 module fender() {
     difference() {
-        translate([-30.4, 81, 159.37]) 
-            rotate([1, 180, 180]) 
-                scale([0.6, 0.25, 0.7]) 
+        translate([-36.9, 127.5, 176.225]) 
+            rotate([0, 180, 180]) 
+                scale([0.75, 0.4, 0.78]) 
                     import("fenderpt1.STL");
         
         //translate([13, 9, -4]) rotate([0, 0, -20]) cube([10, 20, 22]);

@@ -23,15 +23,15 @@ module stand() {
 
 difference() {
     translate([-25, 30, -6]) brushMount();
-    scale([1.05, 1, 1.05]) stand();
+    scale([1.02, 1, 1.05]) stand();
 }
 
 module brushMount() {
     difference() {
         translate([0, 0, 0]) {
-            cylinder(d = 36, h = 60);
-            translate([0, -18, 0]) cube([28, 36, 22]);
+            cylinder(d = 30, h = 60);
+            translate([0, -15, 0]) cube([28, 30, 22]);
         }
-        translate([0, 0, -1]) cylinder(d = 30, h = 70);
+        translate([0, 0, 3]) cylinder(d = 26, h = 70);
     }
 }

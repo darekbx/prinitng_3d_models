@@ -6,7 +6,7 @@ w = 42.5;
 difference() {
     minkowski() {
         sphere(2);
-        cube([h + 6, w + 6, 2], true);
+        cube([h + 8, w + 8, 4], true);
     }
-    #cube([h, w, 8], true);
+    #cube([h, w, 10], true);
 }
