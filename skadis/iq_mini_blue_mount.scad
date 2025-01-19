@@ -10,14 +10,18 @@ difference() {
 
 translate([0, -10, 12.5]) cube([4, 43.5, 40]);
 
-translate([0, -1, 0]) mount();
-translate([0, 20, 0]) mount();
 
-//#translate([0, 0, 0]) cube([1,25,1]);
-//#translate([-2, 0, 3]) cube([12,1,71.5]);
+//translate([0, -1, 0]) mount_yellow();
+//translate([0, 20, 0]) mount_yellow();
+
+translate([0, -10, 0]) mount_reverso();
+translate([0, 30, 0]) mount_reverso();
+
+//#translate([-14, -8, 3]) cube([14,1,1]);
+//#translate([-21, -8, 3]) cube([12,1,69]);
 
 // Mount
-module mount() {
+module mount_yellow() {
     translate([-0, 0, 1]) cube([4, 4, 76]);
     translate([-6, 0, 1]) difference() {
         cube([8, 4, 6]);
@@ -33,6 +37,24 @@ module mount() {
     translate([-25.5, 0, 1]) cube([25, 4, 2]);
     translate([-25.5, 0, 2]) cube([2, 4, 4]);
 }
+
+module mount_reverso() {
+    translate([-0, 0, 0.7]) cube([4, 4, 73.6]);
+    translate([-3, 0, 1]) difference() {
+        cube([5, 4, 7]);
+        translate([-1, -1, 2]) cube([8, 6, 3]);
+    }
+    translate([-3, 0, 67.3]) difference() {
+        cube([5, 4, 7]);
+        translate([-1, -1, 2]) cube([8, 6, 3]);
+    }
+    translate([-16, 0, 72]) cube([20, 4, 2.3]);
+    translate([-16, 0, 70]) cube([2, 4, 4]);
+
+    translate([-16, 0, 0.7]) cube([20, 4, 2.3]);
+    translate([-16, 0, 1.7]) cube([2, 4, 4]);
+}
+
 
 
 //MI Monitor
