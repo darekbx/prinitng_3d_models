@@ -1,4 +1,4 @@
-$fn = 30;
-for ( i = [0 : 5] ){
-    translate([i*60, 0, 0]) sphere(d = 50);
+difference() {
+    import("C:\\Users\\darek\\Downloads\\keychain-pill-bottle-8mm-lid.stl");
+    #translate([-10,-10,16]) cube(20);
 }

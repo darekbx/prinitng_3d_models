@@ -4,7 +4,7 @@ $fn = $preview ? 45 : 60;
 
 bolt = 5.1; // M5
 
-//removable_mount();
+removable_mount();
 
 //mirror([0, 1, 0]) water_bottle_mount();
 

@@ -1,7 +1,7 @@
-include <threads.scad>
-include <../libs/cyl_head_bolt.scad>
+include <libs\threads.scad>
+include <libs\cyl_head_bolt.scad>
 
-$fn = 45;
+$fn = $preview ? 15 : 60;
 
 diameter = 9.5;
 thickness = 1.5;
@@ -35,13 +35,15 @@ module fork_screw() {
     difference() {
         translate([0, 0, 0]) {
             thread(orad, (tlength+lead)*0.75, lead);
-            cylinder(d = 5.2, h = 4);
-            translate([0, 0, 0]) cylinder(d = 8, h = 1);
+            translate([0, 0, -2]) { 
+                cylinder(d = 5.2, h = 6);
+                translate([0, 0, 0]) cylinder(d = 9, h = 3);
+            }
         }
         
         df = _get_screw_fam("M3x16");
         key_width = df[_NB_F_KEY];
         key_depth = df[_NB_F_KEY_DEPTH];
-        translate([0, 0, 3.5]) key_slot(k=key_width, l=key_depth*3+e);
+        translate([0, 0, 0]) key_slot(k=key_width, l=key_depth*3+e);
     }
 }
