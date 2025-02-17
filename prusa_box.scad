@@ -1,6 +1,7 @@
 // Plates
 // 340x390x3 x4 = 0.53m2
 // 340x358x3 x1 = 0.12m2
+//                0.65m2
 
 wall_thickness = 3;
 height = 390;
@@ -125,7 +126,7 @@ module top_bottom_corner() {
     color([0.3, 0.3, 0.3]) difference() {
         translate([0, 0, 0]) {
             translate([0, 0, edge_height]) 
-                cube([edge_height, edge_height + 9, height - edge_height * 3 - 9]);
+                cube([edge_height, edge_height + 9, (height - edge_height * 3 - 9) / 2]);
         }
         translate([9, 9, -1]) cube([53, 59, height + 50]);
         translate([3, (9 - wall_thickness) / 2 - offset / 2, 3]) 
