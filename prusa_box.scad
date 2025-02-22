@@ -8,7 +8,7 @@ height = 390;
 width = 340;
 depth = 340;
 
-offset = 0.2; // Additional space for connectors
+offset = 0.1; // Additional space for connectors
 edge_height = 15;
 
 if ($preview) {
@@ -30,7 +30,7 @@ translate([width, depth + 6, 0]) rotate([0, 0, 180]) {
 }
 
 // top-bottom corners
-translate([-3, -9, edge_height - 3]) top_bottom_corner();
+!translate([-3, -9, edge_height - 3]) top_bottom_corner();
 
 // top corners
 mirror([0, 0, 1]) {
@@ -82,8 +82,8 @@ module top_edge(width = 200) {
         cube([width, 9, edge_height + 9]);
         translate([-1, (9 - wall_thickness) / 2 - offset / 2, -3]) 
             cube([width + 2, wall_thickness + offset, edge_height]);
-        translate([-1, 3, 12 + wall_thickness * 2 - offset / 1]) 
-            cube([width + 2, 6 + wall_thickness * 2, wall_thickness + offset]);
+        translate([-1, 3, 12 + wall_thickness * 2 - offset / 1 -offset]) 
+            cube([width + 2, 6 + wall_thickness * 2, wall_thickness + offset*3]);
     }
 }
 
@@ -118,22 +118,23 @@ module top_corner() {
                 cube([width + 2, wall_thickness + offset, edge_height * 3]);
                 
         translate([3, 3, -12 + wall_thickness * 2]) 
-            cube([width/3, depth /3+ wall_thickness * 2, wall_thickness + offset]);
+            cube([width / 3, depth / 3+ wall_thickness * 2, wall_thickness + offset * 4]);
     }
 }
 
 module top_bottom_corner() {
+    edge_height = 8;
     color([0.3, 0.3, 0.3]) difference() {
         translate([0, 0, 0]) {
             translate([0, 0, edge_height]) 
-                cube([edge_height, edge_height + 9, (height - edge_height * 3 - 9) / 2]);
+                cube([edge_height, edge_height + 7, 342/2]);
         }
         translate([9, 9, -1]) cube([53, 59, height + 50]);
         translate([3, (9 - wall_thickness) / 2 - offset / 2, 3]) 
-            cube([width + 2, wall_thickness + offset, height + edge_height * 3]);
+            cube([width + 2, wall_thickness + offset* 3, height + edge_height * 3]);
         translate([6, (27 - wall_thickness) / 2 - offset / 2, 3]) 
             rotate([0, 0, 90]) 
-                cube([width + 2, wall_thickness + offset, height + edge_height * 3]);
+                cube([width + 2, wall_thickness + offset* 3, height + edge_height * 3]);
     }
 }
 
