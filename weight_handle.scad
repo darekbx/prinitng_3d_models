@@ -9,9 +9,9 @@ if ($preview) {
 
 translate([0, 0, 3]) {
     difference() {
-        translate([0, 0, -20]) cube([98, 15.5, 36], true);
-        translate([0, 0, -26]) cube([90, 20, 35], true);
+        translate([0, 0, -20]) cube([100, 20, 48], true);
+        translate([0, 0, -24]) cube([90, 22, 40], true);
     }
 
-    translate([-49, 0, -38]) rotate([0, 90, 0]) cylinder(d=15.5, h=98);
+    translate([-50, 0, -44]) rotate([0, 90, 0]) cylinder(d=20, h=100);
 }

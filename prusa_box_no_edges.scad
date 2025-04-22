@@ -9,14 +9,14 @@ width = 340;
 depth = 340;
 
 offset = 0.1; // Additional space for connectors
-edge_height = 15;
+edge_height = 12;
 
 if ($preview) {
     #box();
 }
 
 // bottom edges
-!translate([(width - 240) / 2, -9, -3]) bottom_edge(width = 248/2);
+translate([(width - 240) / 2, -9, -3]) bottom_edge(width = 240);
 translate([(width - 240) / 2, 6 + depth, -3]) bottom_edge(width = 240);
 translate([6, (width - 240) / 2, -3]) rotate([0, 0, 90]) bottom_edge(width = 246);
 translate([3 + depth, (width - 240) / 2, -3]) rotate([0, 0, 90]) bottom_edge(width = 246);
@@ -30,12 +30,12 @@ translate([width, depth + 6, 0]) rotate([0, 0, 180]) {
 }
 
 // top-bottom corners
-!translate([-3, -9, edge_height - 3]) top_bottom_corner();
+translate([-3, -9, edge_height - 3]) top_bottom_corner();
 
 // top corners
 mirror([0, 0, 1]) {
     translate([0, 0, -height]) {
-        translate([-3, -9, -3]) top_corner();
+        !translate([-3, -9, -3]) top_corner();
         mirror([1, 0, 0]) translate([-width - 3, -9, -3]) top_corner();
         translate([width, depth + 6, 0]) rotate([0, 0, 180]) {
             translate([-3, -9, -3]) top_corner();
@@ -90,14 +90,12 @@ module top_edge(width = 200) {
 module bottom_corner() {
     color([0.5, 0.5, 0.5]) difference() {
         translate([0, 0, 0]) {
-            cube([53, 59, edge_height]);
-            translate([0, 0, edge_height]) 
-                cube([edge_height, edge_height + 9, edge_height]);
+            cube([53, 53, edge_height]);
         }
         translate([9, 9, -1]) cube([53, 59, 50]);
-        translate([3, (9 - wall_thickness) / 2 - offset / 2, 3]) 
+        translate([6, (9 - wall_thickness) / 2 - offset / 2, 3]) 
             cube([width + 2, wall_thickness + offset, edge_height * 3]);
-        translate([6, (27 - wall_thickness) / 2 - offset / 2, 3]) 
+        translate([6, (15 - wall_thickness) / 2 - offset / 2, 3]) 
             rotate([0, 0, 90]) 
                 cube([width + 2, wall_thickness + offset, edge_height * 3]);
     }
@@ -106,14 +104,12 @@ module bottom_corner() {
 module top_corner() {
     color([0.5, 0.5, 0.5]) difference() {
         translate([0, 0, 0]) {
-            translate([0, 0, -9]) cube([53, 59, edge_height + 9]);
-            translate([0, 0, edge_height]) 
-                cube([edge_height, edge_height + 9, edge_height]);
+            translate([0, 0, -9]) cube([53, 59, edge_height + 3]);
         }
         translate([9, 9, -10]) cube([53, 59, 70]);
-        translate([3, (9 - wall_thickness) / 2 - offset / 2, 3]) 
+        translate([6, (9 - wall_thickness) / 2 - offset / 2, -1]) 
             cube([width + 2, wall_thickness + offset, edge_height * 3]);
-        translate([6, (27 - wall_thickness) / 2 - offset / 2, 3]) 
+        translate([6, (15 - wall_thickness) / 2 - offset / 2, 3]) 
             rotate([0, 0, 90]) 
                 cube([width + 2, wall_thickness + offset, edge_height * 3]);
                 
@@ -127,14 +123,14 @@ module top_bottom_corner() {
     color([0.3, 0.3, 0.3]) difference() {
         translate([0, 0, 0]) {
             translate([0, 0, edge_height]) 
-                cube([edge_height, edge_height + 7, 1]);
+                cube([edge_height, edge_height + 7, (height - edge_height * 3 - 9) / 2]);
         }
         translate([9, 9, -1]) cube([53, 59, height + 50]);
         translate([3, (9 - wall_thickness) / 2 - offset / 2, 3]) 
-            cube([width + 2, wall_thickness + offset* 3, height + edge_height * 3]);
+            cube([width + 2, wall_thickness + offset, height + edge_height * 3]);
         translate([6, (27 - wall_thickness) / 2 - offset / 2, 3]) 
             rotate([0, 0, 90]) 
-                cube([width + 2, wall_thickness + offset* 3, height + edge_height * 3]);
+                cube([width + 2, wall_thickness + offset, height + edge_height * 3]);
     }
 }
 

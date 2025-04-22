@@ -11,13 +11,13 @@ difference() {
         cylinder(d1 = e - 6, d2 = e, h = d - 2);
     }
     
-    translate([0, 0, -10]) minkowski() {
+    translate([0, 0, -11]) minkowski() {
         cube([w - e, h - e, d], true);
         cylinder(d = e/2, h = d);
     }
 
-    translate([0, 0, -1]) cube([120, 50, d], true);
-    translate([0, 0, -1]) cube([90, 80, d], true);
+    translate([0, 0, -1]) cube([120, 46, d], true);
+    translate([0, 0, -1]) cube([86, 80, d], true);
     
     for (i = [-2, -1, 0, 1, 2]) {
         translate([0, i * 12, 10]) b();

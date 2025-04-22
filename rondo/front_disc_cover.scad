@@ -1,15 +1,14 @@
-$fn = $preview ? 22 : 270;
+$fn = $preview ? 22 : 360;
 
-front = false;
-is_commencal = false;
+front = true;
 
 disc_diameter = 160;
 cover_offset = 4;
-cover_height = is_commencal ? 15 : 8;
+cover_height = 8;
 cover_thickness = 2;
 
-spacer_diameter = is_commencal ? 10.1 : 19.1;
-colar_height = is_commencal ? 0 : (front ? 5 : 2.5);
+spacer_diameter = 19.3;
+colar_height = front ? 3 : 2.5;
 
 difference() {
     cover();
@@ -25,6 +24,7 @@ difference() {
 }
 
 module front_brake_caliper() {
+
     rotate([0, 0, 16]) translate([28.5, -10.5, -5]) cube([80, 110, 20]);
     rotate([0, 0, 16]) translate([28.5, -14.5, -5]) cube([30, 30, 20]);
     rotate([0, 0, 20]) translate([34, -17, -5]) cube([60, 70, 20]);
@@ -36,13 +36,6 @@ module rear_brake_caliper() {
     rotate([0, 0, 16]) translate([30.5, -11, -5]) cube([60, 30, 20]);
     rotate([0, 0, 16]) translate([28, -11, -5]) cube([60, 6, 20]);
     rotate([0, 0, 16]) translate([28, -11, -5]) cube([60, 6, 20]);
-    
-    // Only for Commencal
-    if (is_commencal) {
-        rotate([0, 0, -24]) translate([28, 10, -5]) cube([60, 40, 20]);
-    }
-    
-    translate([30, 7.2, -5]) cylinder(d = 20, h = 10);
 }
 
 module pattern() {
@@ -72,14 +65,15 @@ module pattern() {
 
 module cover() {
     cylinder(d = disc_diameter + cover_offset, h = cover_thickness);
-    cylinder(d = spacer_diameter + 2, h = colar_height);
+    cylinder(d = spacer_diameter + 10, h = colar_height);
     translate([0, 0, cover_thickness]) ring();
 }
 
 module ring() {
     difference() {
         cylinder(d = disc_diameter + cover_offset, h = cover_height);
-        translate([0, 0, -1]) cylinder(d = disc_diameter + cover_offset - 2, h = 10 + cover_height);
+        translate([0, 0, -1]) 
+            cylinder(d = disc_diameter + cover_offset - 2, h = 10 + cover_height);
     }
 }
 
