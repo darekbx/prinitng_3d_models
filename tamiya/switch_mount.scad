@@ -5,11 +5,9 @@ difference() {
 }
 
 difference() {
-    translate([-14, 6, -6.5]) cube([5, 24, 18], true);
-    translate([-14, -1.5, -11.5]) cube([6, 22, 18], true);
+    translate([-14-2, 6, -6.5]) cube([8, 24, 18], true);
+    translate([-16, -1.5, -11.5]) cube([10, 22, 18], true);
 }
-
-
 
 module base(e) {
     difference() {
