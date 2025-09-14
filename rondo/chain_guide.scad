@@ -25,7 +25,6 @@ mount_width = 17;
 mount_thickness = 5;
 frame_tube_diameter = 32.5;
 
-!key_handle();
 
 module key_handle() {
     difference() {
@@ -65,7 +64,7 @@ module key_handle() {
 !difference() {
     translate([0, 0, 0]) {
         mountBase();
-        //guideHandle();
+        guideHandle();
     }
     tube();
 }

@@ -29,9 +29,28 @@ intersection() {
 }
 
 //!translate([0, 0, -spacer_t]) spacer();
+//translate([0, 0, -spacer_t]) { spacer_v(3); }
 
-module spacer() {
-    mount(10);
+module spacer(thickness=3) {
+    mount(thickness);
+}
+
+module spacer_v(thickness = 2.5) {
+    difference() {
+        cylinder(d1 = mount_external_diameter,d2 = mount_external_diameter + 3,h = thickness);
+        translate([0, 0, -1]) cylinder(d = nut_d, h = thickness + 2);
+    }
+    
+    // Teeth
+    teeth_t = 5;
+    parts = 9;
+    difference() {
+        for(i = [0 : parts])
+            rotate(i * 360 / parts)
+                translate([nut_d / 2 - 3, -teeth_t / 2, 0]) 
+                    cube([4, teeth_t, thickness]);
+        translate([0, 0, -1]) cylinder(d = nut_d - 2, h = thickness + 2);
+    }
 }
 
 module mount(thickness) {

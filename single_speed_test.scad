@@ -2,24 +2,25 @@ include <threads.scad>
 
 $fn = 60;
 
-top();
-//translate([0, 0, 23.3]) rotate([180,0,0]) bottom();
+//top();
+translate([0, 0, 21.3]) rotate([180,0,0]) bottom();
 //h();
+
+//#translate([-17,0,2])cylinder(d = 1,h = 17);
 
 module bottom(filled = false) {
     difference() {
         translate([0,0,0]) {
-            cylinder(d = 41, h = 4);
-            cylinder(d = 32, h = 5.3);
+            cylinder(d = 40, h = 1.4);
+            cylinder(d = 32, h = 15);
         }
-        translate([0,-16.5,-5]) cylinder(d = 2.5, h = 10);
         if (!filled) {
-            translate([0,0,-8]) cylinder(d=32-6, h=20);
+            translate([0,0,-8]) cylinder(d=32-4, h=40);
         }
     }
 
     difference() {
-        translate([0,0,4]) {
+        translate([0,0,15]) {
             if (false&&$preview) {
                 cylinder(d=32, h=6);
             } else {
@@ -27,7 +28,7 @@ module bottom(filled = false) {
             }
         }
         if (!filled) {
-            translate([0,0,-8]) cylinder(d=32-6, h=20);
+            translate([0,0,-8]) cylinder(d=32-4, h=40);
         }
     }
     
@@ -44,7 +45,7 @@ module h() {
 
 module top() {
     difference() {
-        cylinder(d = 41, h = 4.6);
-        translate([0,0,-5.3]) scale([1.05,1.05,1]) bottom(true);
+        cylinder(d = 40, h = 3);
+        translate([0,0,-16.3]) scale([1.05,1.05,1]) bottom(true);
     }
 }
