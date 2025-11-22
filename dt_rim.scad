@@ -1,18 +1,21 @@
+
 $fn = 100;
 
 scale(0.1) {
     r30();
-    translate([0, 240, 0]) r35();
+    //translate([0, 240, 0]) r35();
 }
 
 module r35() {
-    scale(0.89) rim();
+    translate([-160, -10, 0]) scale([0.65, 0.62, 1]) rotate([180,0,0]) linear_extrude(20) 
+    import("C:/Users/darek/Downloads/rim_35.svg");
     //#cube([350, 10, 15]);
     //translate([175 - 5, 0, 0]) #cube([10, 210, 15]);
 }
 
 module r30() {
-    scale([0.76, 0.84, 0.76]) rim();
+    translate([-273, 685, 0]) scale([2.34, 2.16, 1]) rotate([180,0,0]) linear_extrude(42) 
+    import("C:/Users/darek/Downloads/rim_e_30.svg");
     //#cube([300, 10, 15]);
     //translate([150 - 5, 0, 0]) #cube([10, 200, 15]);
 }

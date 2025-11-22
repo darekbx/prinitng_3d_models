@@ -37,29 +37,4 @@ module cog(teeth, base_d) {
                     cube([4, teeth_t, thickness]);
         translate([0, 0, -1]) cylinder(d = nut_d - 2, h = thickness + 2);
     }
-
-    /*translate([0, 0, 1]) {
-        difference() {
-            translate([0, 0, 0]) {
-                for (a = [0: 6]) {
-                    rotate(a * 360 / 6) {
-                        translate([0, 6, -1]) {
-                            cube([45, 10, 2]);
-                        }
-                    }
-                }
-            }
-            translate([0, 0, -2]) cylinder(d = 24, h = 5);
-        }
-    }
-
-    translate([0, 0, 1]) {
-        // Add teeth
-        for (i = [0: teeth - 1]) {
-            rotate(i * 360 / teeth)
-            translate([base_d / 2, 0.05, 0])
-            rotate(360 / teeth / 2)
-            cube([3, 4.6, 2], center = true);
-        }
-    }*/
 }
