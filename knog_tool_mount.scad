@@ -13,10 +13,10 @@ module h() {
         difference() {
             //rotate([-90,0,0]) import("Hook_single.stl");
             translate([0,11,-0.9]) cylinder(d = 2.5, h = 9);
-            /*translate([0,0,-2]) {
+            translate([0,0,-2]) {
                 translate([0,11,-0.9]) cylinder(d = 3, h = 9);
                 translate([0,11,8]) cylinder(d = 4.6, h = 10);
-            }*/
+            }
         }
     }
 }

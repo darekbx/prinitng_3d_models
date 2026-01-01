@@ -18,6 +18,11 @@ module twoHoles() {
                 cube([14 - radius, 78 - radius, height]);
                 cylinder(d = radius, h = 1);
             }
+            
+            translate([1, 11, -18]) minkowski() {
+                cube([14 - radius, 32 - radius, 1]);
+                cylinder(d = radius, h = 18);
+            }
             /*translate([3, 14, 0]) {
                 offsetH = 2;
                 translate([0, 0, 0]) cylinder(d = 10, h = offsetH);
@@ -28,12 +33,22 @@ module twoHoles() {
             translate([0, 0, 0]) scale([1.1, 1.1, 1.1]) fork_screw();
             translate([0, screws, 0]) scale([1.1, 1.1, 1.1]) fork_screw();
         }
-        
-        
+         
         translate([1, 23, -2]) {
             translate([0, 0, 0]) minkowski() {
                 cube([2, 44, 10]);
                 cylinder(d = 4, h = 1);
+            }
+        }
+        
+        translate([-8, 11, -20]) {
+            translate([7, 1, 0]) cube([6, 20, 20]);
+            translate([0, 20.9, 0]) cube([20, 20, 20]);
+            translate([0, 2, -22]) rotate([40, 0, 0]) cube([20, 41.5, 20]);
+            translate([10, 2, 0]) scale([1.1, 1.1, 1.1]) cylinder(d = 10.4, h = 18);
+            
+            translate([0, 0, 20]) rotate([0, 90, 0]) { 
+                linear_extrude(20) polygon([[0, 12], [0, 0], [10, 0]]);
             }
         }
     }

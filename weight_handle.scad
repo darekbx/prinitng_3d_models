@@ -2,9 +2,9 @@ include <threads.scad>
 $fn = $preview ? 16 :90;
 
 if ($preview) {
-    cylinder(d=15.5, h=36);
+    cylinder(d=15.5, h=40);
 } else {
-    metric_thread(diameter = 15.5, pitch = 2, length = 36, internal = true);
+    metric_thread(diameter = 15.5, pitch = 2, length = 40, internal = true);
 }
 
 translate([0, 0, 3]) {

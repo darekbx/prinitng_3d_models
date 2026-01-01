@@ -5,15 +5,19 @@ difference() {
         collar();
         translate([0, 0, 4]) body();
     }
-    translate([0, 0, -1]) cube([50, 50, 64], false);
+    //translate([0, 0, -1]) cube([50, 50, 64], false);
     
     // Rear mount
-    translate([-15, 11.5, 54]) 
+    translate([-15, 11.5, 51]) 
         rotate([0, 90, 0]) 
             scale([1.4, 1, 1]) 
                 cylinder(d = 4, h = 30);
-    translate([0, 15, 57]) rotate([30, 0, 0]) cube([30, 6, 2], true);
-    translate([0, 15, 56]) cube([30, 4, 2], true);
+    translate([-15, 12, 50.1]) 
+        rotate([0, 90, 0]) 
+            scale([1, 1, 1]) 
+                cylinder(d = 4, h = 30);
+    translate([0, 14, 54]) rotate([30, 0, 0]) cube([30, 6, 2], true);
+    translate([0, 16, 54]) cube([30, 4, 2], true);
 }
 
 module body() {
@@ -68,14 +72,22 @@ module body() {
         
         translate([-30, 23, 23]) rotate([0, 90, 0]) cylinder(d = 32, h = 60);
     }
+    
+    // Inner fill
+    translate([0, 0, 42]) difference() {
+        cylinder(d = 28, h = 5);
+        translate([0, -2.7, 10]) cube([30, 22, 22], true);
+    }
 }
 
 module bottom_sphere() {
     translate([0, 0, 48]) difference() {
-        sphere(d = 33);
+        scale([1, 1, 0.65]) sphere(d = 33);
         translate([0, 0, -20]) cylinder(d = 34, h = 20);
         translate([0, 0, -1.1]) cylinder(d = 16.6, h = 9);
         translate([0, 0, 7.5]) cylinder(d = 34, h = 20);
+        
+        translate([0, 0, 6.5]) rotate([-45, 0, 0]) cylinder(d = 14, h = 20);
     }
 }
 
