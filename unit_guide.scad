@@ -68,7 +68,7 @@ module clamp() {
             translate([-50, -0.2, -1]) cube([100, 0.4, 12]);
             
             translate([bb_d / 2 + 6, -9, 5.5]) clampScrew();
-            translate([-bb_d / 2 - 6, -9, 5.5]) mirror([1, 0, 0]) clampScrew();
+            #translate([-bb_d / 2 - 6, -9, 5.5]) mirror([1, 0, 0]) clampScrew();
             
         }
         translate([0, 0, 5.5]) 

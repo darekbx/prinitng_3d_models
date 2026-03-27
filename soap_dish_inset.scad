@@ -3,7 +3,7 @@ $fn = 45;
 w = 107;
 h = 68;
 d = 15;
-e = 24;
+e = 28;
 
 difference() {
     minkowski() {
@@ -12,21 +12,21 @@ difference() {
     }
     
     translate([0, 0, -11]) minkowski() {
-        cube([w - e, h - e, d], true);
-        cylinder(d = e/2, h = d);
+        cube([w - 21, h - 19, d], true);
+        cylinder(d = 5, h = d);
     }
 
     translate([0, 0, -1]) cube([120, 46, d], true);
     translate([0, 0, -1]) cube([86, 80, d], true);
     
     for (i = [-2, -1, 0, 1, 2]) {
-        translate([0, i * 12, 10]) b();
+        translate([0, i * 12, 4]) b();
     }
 }
 
 module b() {
     minkowski() {
         cube([86, 1, d], true);
-        cylinder(d = 5, h = 0.01);
+        cylinder(d = 5, h = 10);
     }
 }

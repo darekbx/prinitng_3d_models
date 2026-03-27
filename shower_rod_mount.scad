@@ -1,6 +1,6 @@
 $fn = 90;
 
-hook_width = 20.6;
+hook_width = 20.8;
 
 // distance from wall: 35mm
 // rod external diameter: 22mm
@@ -31,6 +31,13 @@ module hook() {
             translate([0, 0, -1.5]) cylinder(d = 4, h = 4);
             translate([0, 0, 5]) cylinder(d = 8, h = 60);
         }
+        
+        translate([0, -43, -57]) cylinder(d = 12.4, h = 60);
+        translate([0, -43, -5.5]) cylinder(d1 = 4, d2 = 3.4, h = 26);
+        translate([0, -43, 20.1]) cylinder(d1 = 3.4, d2 = 3, h = 8);
+        
+        translate([-14, -43.5, 7]) cube([30, 1, 30]);
+        translate([-0.5, -60.5, 7]) cube([1, 30, 30]);
         
         translate([8.4 - 2.2, -2.1 - 2.4, -4.5]) cube([2, 1.3, 5]);
         translate([8.4 - 1.2, -2.1 - 2.4, -29.5]) cube([2, 1.3, 30]);
